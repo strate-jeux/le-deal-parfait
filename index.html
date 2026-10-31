@@ -1,0 +1,1749 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Deal Parfait</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+  <style>
+    body { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+html, body { height: 100%; }
+:root { --nav-h: 64px; }
+
+main{
+  height: 100vh;
+  padding-top: var(--nav-h);
+}
+
+/* Chaque slide = la hauteur de l’écran (sans le menu) */
+.slide{
+  display: none;
+  height: calc(100vh - var(--nav-h));
+  min-height: calc(100vh - var(--nav-h));
+  overflow: hidden;
+}
+.slide.active{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Slides qui doivent scroller */
+.slide.scroll{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: flex-start;
+}
+
+/* ===== Univers bleu STRATE-JEUX ===== */
+.sj-hero{
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background: linear-gradient(135deg, #061A5C 0%, #0E55E6 45%, #204ECF 70%, #3FA9FF 100%);
+  background-size: 300% 300%;
+  animation: sjGradient 14s ease infinite;
+}
+@keyframes sjGradient{
+  0%,100%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+}
+
+/* halos lumineux en mouvement */
+.sj-blob{
+  position: absolute; z-index: -1;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: .55;
+  animation: sjFloat 12s ease-in-out infinite;
+  pointer-events: none;
+}
+.sj-blob.b1{ width: 42vw; height: 42vw; background: #3FA9FF; top: -12vw; left: -10vw; }
+.sj-blob.b2{ width: 36vw; height: 36vw; background: #061A5C; bottom: -14vw; right: -8vw; animation-delay: -4s; }
+.sj-blob.b3{ width: 22vw; height: 22vw; background: #FFC94D; top: 40%; right: 18%; animation-delay: -8s; opacity: .22; }
+@keyframes sjFloat{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  33%{ transform: translate(4vw,3vw) scale(1.08); }
+  66%{ transform: translate(-3vw,2vw) scale(.95); }
+}
+
+/* grille discrète */
+.sj-grid{
+  position: absolute; inset: 0; z-index: -1;
+  background-image:
+    linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+          mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+
+/* logos d'entreprises et symboles qui flottent autour du titre */
+.sj-floaters{ position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.sj-floater{
+  position: absolute;
+  width: clamp(48px, 6.5vw, 84px); height: clamp(48px, 6.5vw, 84px);
+  border-radius: 20px;
+  padding: 6px;
+  overflow: hidden;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.9), 0 12px 30px rgba(6,26,92,.45);
+  animation: sjBob 6s ease-in-out infinite, sjPop .7s cubic-bezier(.34,1.56,.64,1) both;
+}
+.sj-floater.coin{ border-radius: 9999px; background: #FFC94D; }
+.sj-floater img{ width: 100%; height: 100%; object-fit: contain; display: block; }
+@keyframes sjBob{
+  0%,100%{ transform: translateY(0) rotate(-3deg); }
+  50%{ transform: translateY(-14px) rotate(3deg); }
+}
+@keyframes sjPop{
+  from{ opacity: 0; scale: .3; }
+  to{ opacity: 1; scale: 1; }
+}
+
+.sj-badge{
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .45rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.3);
+  backdrop-filter: blur(8px);
+  font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem;
+}
+.sj-dot{
+  width: 8px; height: 8px; border-radius: 9999px; background: #5CFFB0;
+  box-shadow: 0 0 0 0 rgba(92,255,176,.7);
+  animation: sjPing 1.6s infinite;
+}
+@keyframes sjPing{
+  0%{ box-shadow: 0 0 0 0 rgba(92,255,176,.7); }
+  100%{ box-shadow: 0 0 0 12px rgba(92,255,176,0); }
+}
+
+.sj-title{
+  font-weight: 900;
+  line-height: .95;
+  letter-spacing: -.02em;
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  text-shadow: 0 10px 40px rgba(6,26,92,.45);
+}
+.sj-title .shine{
+  background: linear-gradient(90deg, #fff 0%, #FFD976 25%, #fff 50%, #FFD976 75%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: sjShine 4s linear infinite;
+}
+@keyframes sjShine{ to{ background-position: 200% center; } }
+
+.sj-cta{
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: 1rem 2.2rem;
+  border-radius: 9999px;
+  background: #fff; color: #0E55E6;
+  font-weight: 900; font-size: 1.2rem;
+  box-shadow: 0 14px 40px rgba(6,26,92,.45);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.sj-cta:hover{ transform: translateY(-3px) scale(1.04); box-shadow: 0 20px 50px rgba(6,26,92,.55); }
+.sj-cta .arrow{ transition: transform .2s ease; }
+.sj-cta:hover .arrow{ transform: translateX(5px); }
+
+/* entrées en cascade (rejouées à chaque affichage de la slide) */
+.sj-in{ animation: sjRise .8s cubic-bezier(.2,.8,.2,1) both; }
+.sj-d1{ animation-delay: .1s; } .sj-d2{ animation-delay: .25s; }
+.sj-d3{ animation-delay: .4s; } .sj-d4{ animation-delay: .55s; }
+.sj-d5{ animation-delay: .7s; }
+@keyframes sjRise{
+  from{ opacity: 0; transform: translateY(30px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* Cartes "verre" */
+.sj-role{
+  position: relative;
+  border-radius: 28px;
+  padding: clamp(20px, 3vw, 34px);
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(6,26,92,.35);
+  transition: transform .3s ease, background .3s ease;
+  overflow: hidden;
+}
+.sj-role:hover{ transform: translateY(-6px) rotate(-.4deg); background: rgba(255,255,255,.18); }
+.sj-role::before{
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 5px;
+  background: var(--role-accent);
+}
+.sj-role-pic{
+  width: 104px; height: 104px; border-radius: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px var(--role-accent), 0 12px 30px rgba(6,26,92,.4);
+  margin: 0 auto 14px;
+  font-size: 3rem;
+}
+.sj-role-pic img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.sj-mission{
+  background: rgba(255,255,255,.95); color: #0B2A7A;
+  border-radius: 16px; padding: 12px 16px;
+  font-weight: 700;
+}
+.sj-point{
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.08);
+  transition: background .2s ease, transform .2s ease;
+}
+.sj-point:hover{ background: rgba(255,255,255,.16); transform: translateX(4px); }
+.sj-point .emo{
+  font-size: 1.4rem; width: 42px; height: 42px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px; background: rgba(255,255,255,.15);
+}
+
+.sj-vs{
+  width: 76px; height: 76px; border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff; color: #0E55E6;
+  font-weight: 900; font-size: 1.6rem;
+  box-shadow: 0 0 0 8px rgba(255,255,255,.18), 0 14px 40px rgba(6,26,92,.5);
+  animation: pulse 2s infinite;
+}
+.pulse-animation { animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+
+/* ===== Navigation ===== */
+.sj-nav{
+  background: rgba(6,26,92,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 8px 30px rgba(6,26,92,.35);
+  height: var(--nav-h);
+}
+.sj-progress{
+  position: absolute; left: 0; bottom: 0; height: 3px;
+  background: linear-gradient(90deg, #5CFFB0, #FFC94D);
+  transition: width .4s ease;
+}
+.sj-btn{
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: .7rem 1.6rem;
+  border-radius: 9999px;
+  font-weight: 800;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+}
+.sj-btn:hover{ transform: translateY(-2px); }
+.sj-btn:disabled{ opacity: .4; cursor: not-allowed; transform: none; }
+.sj-btn-sm{ padding: .5rem 1.1rem; font-size: .9rem; }
+.sj-btn-white{ background: #fff; color: #0E55E6; box-shadow: 0 10px 28px rgba(6,26,92,.35); }
+.sj-btn-white:hover{ box-shadow: 0 14px 36px rgba(6,26,92,.45); }
+.sj-btn-blue{ background: #0E55E6; color: #fff; box-shadow: 0 10px 28px rgba(14,85,230,.35); }
+.sj-btn-blue:hover{ background: #204ECF; }
+.sj-btn-ghost{ background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+.sj-btn-ghost:hover{ background: rgba(255,255,255,.2); }
+.sj-btn-amber{ background: #FFB020; color: #061A5C; }
+.sj-btn-soft{ background: #E8EEFC; color: #0B2A7A; }
+.sj-btn-soft:hover{ background: #D6E1FB; }
+
+.sj-dots{ gap: 6px; align-items: center; }
+.sj-dots button{
+  width: 8px; height: 8px; border-radius: 9999px;
+  background: rgba(255,255,255,.3);
+  transition: width .3s ease, background .3s ease;
+}
+.sj-dots button.on{ width: 24px; background: #fff; }
+.sj-dots button:hover{ background: rgba(255,255,255,.7); }
+
+.sj-panel{
+  border-radius: 28px;
+  padding: clamp(16px, 2.5vw, 28px);
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(6,26,92,.35);
+}
+.sj-h2{
+  font-weight: 900;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  text-shadow: 0 8px 30px rgba(6,26,92,.4);
+}
+.sj-step-num{
+  width: 48px; height: 48px; border-radius: 9999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; color: #0E55E6; font-weight: 900; font-size: 1.2rem;
+  box-shadow: 0 8px 24px rgba(6,26,92,.35);
+  flex: none;
+}
+
+/* ===== Timers ===== */
+.timer-shell{
+  background: rgba(255,255,255,0.94);
+  border: 1px solid rgba(255,255,255,.6);
+  box-shadow: 0 30px 80px rgba(6,26,92,.5);
+  border-radius: 32px;
+  padding: 28px 24px;
+  width: min(560px, 92vw);
+  margin: 0 auto;
+  color: #061A5C;
+}
+.timer-circle {
+  width: clamp(180px, 30vw, 250px);
+  height: clamp(180px, 30vw, 250px);
+  border-radius: 9999px;
+  position: relative;
+  background: conic-gradient(from 0deg, #10b981 0deg, #e5e7eb 0deg);
+  transition: background 0.12s ease;
+  box-shadow: inset 0 0 0 12px rgba(255,255,255,0.88), 0 12px 28px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.timer-circle::after{
+  content: ""; position: absolute; inset: 22px; border-radius: 9999px; background: #fff;
+}
+.timer-text {
+  position: absolute; top: 50%; left: 50%; z-index: 1;
+  transform: translate(-50%, -50%);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #061A5C;
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+}
+.timer-circle.done{ animation: pulse 1s infinite; }
+
+/* ===== Révélation ===== */
+.sj-counter{
+  font-weight: 900;
+  font-size: clamp(5rem, 16vw, 11rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 14px 50px rgba(6,26,92,.5);
+}
+.sj-years{ display: flex; gap: 10px; justify-content: center; }
+.sj-years span{
+  width: clamp(48px, 9vw, 90px); height: 8px; border-radius: 9999px;
+  background: rgba(255,255,255,.2); overflow: hidden; position: relative;
+}
+.sj-years span::after{
+  content: ""; position: absolute; inset: 0; background: #FFC94D;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .9s ease;
+}
+.sj-years span.on::after{ transform: scaleX(1); }
+
+/* ===== Saisie des investissements ===== */
+.inv-card{
+  background: #fff; color: #111827;
+  border-radius: 20px;
+  padding: 16px 18px;
+  box-shadow: 0 10px 30px rgba(6,26,92,.18);
+  border-left: 6px solid var(--accent, #0E55E6);
+}
+.inv-num{
+  width: 40px; height: 40px; border-radius: 12px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #0E55E6; color: #fff; font-weight: 900;
+}
+.inv-total{
+  font-weight: 900; color: #0E55E6;
+  background: #E8EEFC; border-radius: 9999px;
+  padding: .3rem .9rem; font-size: .95rem; white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.inv-field{
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 4px; border-radius: 12px;
+  transition: background .2s ease;
+}
+.inv-field:focus-within{ background: #EEF3FE; }
+.inv-field .co-mini{
+  width: 34px; height: 34px; border-radius: 10px; object-fit: contain; background: #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+}
+.inv-field .co-name{
+  font-size: .62rem; font-weight: 700; color: #4B5563;
+  text-align: center; line-height: 1.1; min-height: 1.4em;
+}
+.investment-input{
+  width: 100%; max-width: 86px;
+  text-align: center;
+  border: 2px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 6px 4px;
+  font-family: 'Poppins', sans-serif; font-weight: 700; color: #061A5C;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  -moz-appearance: textfield;
+}
+.investment-input::-webkit-outer-spin-button,
+.investment-input::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+.investment-input:focus{ outline: none; border-color: #0E55E6; box-shadow: 0 0 0 4px rgba(14,85,230,.15); }
+@media (max-width: 480px){
+  .investment-input{ font-size: .8rem; padding: 6px 2px; }
+}
+.investment-input.filled{ border-color: #10B981; background: #ECFDF5; }
+
+/* ===== Cartes entreprises (révélation) ===== */
+#companies-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
+}
+.co-card{
+  perspective: 1200px;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+  aspect-ratio: 4 / 5;
+  cursor: pointer;
+}
+.co-inner{
+  position: relative; width: 100%; height: 100%;
+  transition: transform .8s cubic-bezier(.3,1.4,.5,1);
+  transform-style: preserve-3d;
+}
+.co-card.revealed .co-inner{ transform: rotateY(180deg); }
+.co-card:not(.revealed):hover .co-inner{ transform: translateY(-6px) rotateY(-8deg); }
+.co-face{
+  position: absolute; inset: 0;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  border-radius: 22px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 16px; text-align: center;
+}
+.co-back{
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 50px rgba(6,26,92,.3);
+  color: #fff;
+}
+.co-logo{
+  width: 62%; aspect-ratio: 1; border-radius: 22px;
+  background: #fff; padding: 8px; object-fit: contain;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.35), 0 12px 30px rgba(6,26,92,.4);
+  margin-bottom: 12px;
+}
+.co-logo-fallback{
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem; font-weight: 900; color: #0E55E6;
+}
+.co-front{
+  transform: rotateY(180deg);
+  background: #fff; color: #111827;
+  box-shadow: 0 14px 50px rgba(6,26,92,.3);
+  border-top: 8px solid var(--res);
+}
+.co-perf{
+  font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 900; line-height: 1;
+  color: var(--res);
+  font-variant-numeric: tabular-nums;
+}
+.co-tag{
+  display: inline-block; padding: .25rem .8rem; border-radius: 9999px;
+  font-weight: 800; font-size: .8rem;
+  background: var(--res-soft); color: var(--res);
+}
+
+/* ===== Récap & classement ===== */
+.row-white{
+  background: #fff; color: #111827;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(6,26,92,.16);
+  padding: 12px 16px;
+}
+.rank-pill{
+  width: 38px; height: 38px; border-radius: 9999px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #E8EEFC; color: #0E55E6; font-weight: 900;
+}
+.bar-track{ height: 10px; border-radius: 9999px; background: #E8EEFC; overflow: hidden; }
+.bar-fill{
+  height: 100%; width: 0; border-radius: 9999px;
+  background: linear-gradient(90deg, #0E55E6, #3FA9FF);
+  transition: width 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.podium{
+  display: flex; justify-content: center; align-items: flex-end;
+  gap: clamp(10px, 2vw, 22px);
+  min-height: 300px;
+}
+.podium-col{ display: flex; flex-direction: column; align-items: center; width: clamp(100px, 18vw, 170px); }
+.podium-avatar{
+  width: 64px; height: 64px; border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff; color: #0E55E6; font-weight: 900; font-size: 2rem;
+  box-shadow: 0 0 0 4px var(--medal), 0 12px 30px rgba(6,26,92,.4);
+  margin-bottom: 8px;
+  animation: sjPop .6s cubic-bezier(.34,1.56,.64,1) both;
+  animation-delay: var(--delay);
+}
+.podium-step{
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(180deg, var(--medal), var(--medal-dark));
+  box-shadow: 0 20px 50px rgba(6,26,92,.4);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding-top: 14px;
+  color: #061A5C;
+  transform-origin: bottom;
+  animation: podiumRise .9s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: var(--delay);
+}
+@keyframes podiumRise{ from{ transform: scaleY(0); } to{ transform: scaleY(1); } }
+
+/* ===== Modal ===== */
+.modal{
+  display: none;
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(6,26,92,.6);
+  backdrop-filter: blur(6px);
+  padding: 16px;
+}
+.modal.show{ display: flex; align-items: center; justify-content: center; }
+.modal-box{
+  background: #fff; color: #111827;
+  border-radius: 28px;
+  padding: clamp(18px, 3vw, 30px);
+  width: min(760px, 100%);
+  max-height: 92vh; overflow: auto;
+  box-shadow: 0 40px 100px rgba(6,26,92,.6);
+  animation: sjRise .4s cubic-bezier(.2,.8,.2,1) both;
+}
+
+/* ===== Confettis ===== */
+.confetti{
+  position: fixed; top: -20px; z-index: 3000;
+  width: 10px; height: 16px; border-radius: 3px;
+  pointer-events: none;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall{
+  to{ transform: translate(var(--dx), 110vh) rotate(var(--rot)); opacity: .9; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .sj-hero, .sj-blob, .sj-floater, .sj-title .shine, .sj-in, .sj-vs, .sj-dot,
+  .pulse-animation, .podium-step, .podium-avatar, .timer-circle.done{ animation: none !important; }
+  .co-inner, .bar-fill{ transition: none !important; }
+}
+
+
+
+/* ===== Le Deal Parfait : compléments ===== */
+.rot-pill{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.5rem 1.2rem; border-radius:9999px;
+  background:#E8EEFC; color:#0B2A7A; font-weight:900;
+}
+.rot-steps{ display:flex; gap:6px; justify-content:center; margin-top:10px; }
+.rot-steps span{ width:22px; height:8px; border-radius:9999px; background:#E5E7EB; transition:background .3s ease; }
+.rot-steps span.done{ background:#10B981; }
+.rot-steps span.now{ background:#0E55E6; }
+
+/* Saisie */
+.buyer-tabs{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.buyer-tab{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:.45rem .9rem; border-radius:9999px;
+  background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3);
+  color:#fff; font-weight:700; font-size:.85rem;
+  transition:background .2s ease, transform .2s ease;
+}
+.buyer-tab:hover{ background:rgba(255,255,255,.24); transform:translateY(-2px); }
+.buyer-tab.on{ background:#fff; color:#0E55E6; }
+.buyer-tab .ok{ width:18px; height:18px; border-radius:9999px; display:inline-flex; align-items:center; justify-content:center; font-size:.7rem; background:rgba(255,255,255,.25); }
+.buyer-tab.filled .ok{ background:#10B981; color:#fff; }
+.buyer-tab.on.filled .ok{ background:#10B981; color:#fff; }
+
+.entry-card{
+  background:#fff; color:#111827;
+  border-radius:28px; padding:clamp(18px,3vw,30px);
+  box-shadow:0 30px 80px rgba(6,26,92,.45);
+}
+.entry-label{ font-size:.8rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#4B5563; margin-bottom:8px; }
+.agency-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; }
+.choice{
+  display:flex; align-items:center; gap:8px;
+  padding:10px 12px; border-radius:14px;
+  border:2px solid #E5E7EB; background:#fff;
+  font-weight:700; font-size:.9rem; color:#061A5C; text-align:left;
+  transition:border-color .2s ease, background .2s ease;
+  cursor:pointer;
+}
+.choice:hover{ border-color:#93B4F5; }
+.choice.on{ border-color:#0E55E6; background:#EEF3FE; }
+.choice .emo{ font-size:1.3rem; }
+.choice .sub{ display:block; font-weight:600; font-size:.75rem; color:#6B7280; }
+.choice.none{ color:#6B7280; }
+.opt-check{ width:20px; height:20px; border-radius:6px; border:2px solid #CBD5E1; flex:none; display:inline-flex; align-items:center; justify-content:center; font-size:.75rem; color:#fff; }
+.choice.on .opt-check{ background:#0E55E6; border-color:#0E55E6; }
+.remise-input{
+  width:110px; text-align:center;
+  border:2px solid #E5E7EB; border-radius:14px; padding:10px;
+  font-family:'Poppins',sans-serif; font-weight:900; font-size:1.3rem; color:#061A5C;
+}
+.remise-input:focus{ outline:none; border-color:#0E55E6; box-shadow:0 0 0 4px rgba(14,85,230,.15); }
+.recap-box{ background:#F3F6FD; border-radius:18px; padding:14px 16px; }
+.recap-price{ font-size:1.6rem; font-weight:900; color:#061A5C; font-variant-numeric:tabular-nums; }
+.warn{ color:#B45309; font-weight:700; font-size:.85rem; }
+
+/* Cartes acheteurs (révélation) */
+#buyers-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; }
+.co-card.buyer{ aspect-ratio:auto; height:400px; max-width:270px; }
+.co-front.buyer-front{ justify-content:flex-start; padding:16px 14px; text-align:left; align-items:stretch; overflow:auto; }
+.buyer-front .co-perf{ font-size:2rem; flex:none; }
+.break-line{ display:flex; justify-content:space-between; gap:8px; font-size:.78rem; padding:3px 0; border-bottom:1px dashed #E5E7EB; }
+.break-line b{ font-variant-numeric:tabular-nums; white-space:nowrap; }
+.break-line.neg b{ color:#DC2626; }
+.break-line.pos b{ color:#059669; }
+.buyer-emo{ font-size:3rem; width:62%; aspect-ratio:1; border-radius:22px; background:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:12px; box-shadow:0 0 0 4px rgba(255,255,255,.35), 0 12px 30px rgba(6,26,92,.4); }
+
+/* Jauges agences */
+.gauge-row{ background:#fff; color:#111827; border-radius:18px; box-shadow:0 8px 24px rgba(6,26,92,.16); padding:12px 16px; }
+.gauge-track{ position:relative; height:14px; border-radius:9999px; background:#E8EEFC; overflow:hidden; }
+.gauge-fill{ height:100%; width:0; border-radius:9999px; background:linear-gradient(90deg,#0E55E6,#3FA9FF); transition:width 1.2s cubic-bezier(.2,.8,.2,1); }
+.gauge-fill.over{ background:linear-gradient(90deg,#10B981,#5CFFB0); }
+.gauge-goal{ position:absolute; top:-3px; bottom:-3px; width:3px; background:#061A5C; border-radius:3px; }
+.agency-emo{ width:44px; height:44px; border-radius:14px; flex:none; display:inline-flex; align-items:center; justify-content:center; font-size:1.5rem; background:#F3F6FD; box-shadow:0 0 0 2px var(--acc); }
+
+.tag-perfect{ background:#FEF3C7; color:#92400E; }
+.tag-good{ background:#D1FAE5; color:#065F46; }
+.tag-mid{ background:#E0E7FF; color:#3730A3; }
+.tag-nul{ background:#FEE2E2; color:#991B1B; }
+
+.debrief-q{ text-align:left; }
+  </style>
+</head>
+
+<body class="h-full bg-gray-50">
+<main>
+
+  <!-- Navigation -->
+  <nav class="sj-nav fixed top-0 left-0 right-0 z-50 px-4 md:px-6 flex items-center">
+    <div class="flex justify-between items-center w-full gap-4">
+      <div class="flex space-x-2">
+        <button id="prevBtn" onclick="changeSlide(-1)" class="sj-btn sj-btn-sm sj-btn-ghost">
+          ← <span class="hidden sm:inline">Précédent</span>
+        </button>
+        <button id="nextBtn" onclick="changeSlide(1)" class="sj-btn sj-btn-sm sj-btn-white">
+          <span class="hidden sm:inline">Suivant</span> →
+        </button>
+      </div>
+      <div id="slideDots" class="sj-dots hidden md:flex" aria-label="Aller à la slide"></div>
+      <div class="text-sm font-semibold text-white/80 whitespace-nowrap">
+        Slide <span id="currentSlideNumber">1</span> / <span id="totalSlides">12</span>
+      </div>
+    </div>
+    <div id="progressBar" class="sj-progress" style="width:0"></div>
+  </nav>
+
+  <!-- Slide 1 : Titre -->
+  <div class="slide active sj-hero items-center justify-center text-center">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="sj-blob b2"></div>
+    <div class="sj-blob b3"></div>
+    <div class="sj-floaters" id="heroFloaters" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6">
+      <div class="sj-in sj-d1 mb-6">
+        <span class="sj-badge"><span class="sj-dot"></span>Vente &amp; négociation · STRATE-JEUX</span>
+      </div>
+      <h1 class="sj-title sj-in sj-d2 mb-6">
+        Le Deal<br><span class="shine">Parfait</span>
+      </h1>
+      <p class="sj-in sj-d3 text-xl md:text-2xl font-semibold opacity-90 mb-10">
+        8 agences · 8 acheteurs · un seul devis à signer 🤝
+      </p>
+      <div class="sj-in sj-d4">
+        <button onclick="changeSlide(1)" class="sj-cta">C'est parti <span class="arrow">→</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2 : Les rôles -->
+  <div class="slide scroll sj-hero">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="sj-blob b2"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 w-full my-auto py-8">
+      <div class="text-center mb-8 md:mb-10">
+        <div class="sj-in sj-d1 mb-3"><span class="sj-badge">Choisis ton camp</span></div>
+        <h2 class="sj-h2 sj-in sj-d2">Les Rôles</h2>
+      </div>
+      <div class="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-8 items-center">
+        <div class="sj-role sj-in sj-d2" style="--role-accent:#FFC94D;">
+          <div class="text-center mb-5">
+            <div class="sj-role-pic">🧳</div>
+            <h3 class="text-3xl font-black">Agences</h3>
+            <p class="opacity-80 font-semibold">les vendeurs, en binôme</p>
+          </div>
+          <div class="sj-mission mb-4">🎯 Objectif : atteindre votre objectif de marge</div>
+          <div class="space-y-2">
+            <div class="sj-point"><span class="emo">🔍</span><p>Découvrez les vrais besoins de chaque client</p></div>
+            <div class="sj-point"><span class="emo">🧩</span><p>Composez la bonne offre : formule et options</p></div>
+            <div class="sj-point"><span class="emo">💶</span><p>Négociez… sans brader votre marge</p></div>
+          </div>
+        </div>
+        <div class="flex justify-center sj-in sj-d3"><div class="sj-vs">VS</div></div>
+        <div class="sj-role sj-in sj-d4" style="--role-accent:#5CFFB0;">
+          <div class="text-center mb-5">
+            <div class="sj-role-pic">🏢</div>
+            <h3 class="text-3xl font-black">Acheteurs</h3>
+            <p class="opacity-80 font-semibold">les entreprises clientes</p>
+          </div>
+          <div class="sj-mission mb-4">🤝 Objectif : signer le meilleur deal en respectant vos contraintes</div>
+          <div class="space-y-2">
+            <div class="sj-point"><span class="emo">🎭</span><p>Incarnez votre entreprise et ses attentes</p></div>
+            <div class="sj-point"><span class="emo">⚖️</span><p>Comparez les offres des 8 agences</p></div>
+            <div class="sj-point"><span class="emo">✍️</span><p>Signez un seul devis, le meilleur pour vous</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3 : Déroulé -->
+  <div class="slide scroll sj-hero">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="sj-blob b2"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center w-full my-auto py-8">
+      <div class="sj-in sj-d1 mb-3"><span class="sj-badge">Le déroulé</span></div>
+      <h2 class="sj-h2 sj-in sj-d2 mb-8">Déroulement du jeu</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 text-left">
+        <div class="sj-point sj-in sj-d2" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">1</span>
+          <p><span class="font-black block">Préparation</span>Lisez votre fiche, préparez vos arguments et vos questions.</p>
+        </div>
+        <div class="sj-point sj-in sj-d3" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">2</span>
+          <p><span class="font-black block">Entretiens</span>Chaque agence rencontre chaque acheteur et lui remet un devis.</p>
+        </div>
+        <div class="sj-point sj-in sj-d4" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">3</span>
+          <p><span class="font-black block">Signature</span>Chaque acheteur signe un seul devis.</p>
+        </div>
+        <div class="sj-point sj-in sj-d5" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">4</span>
+          <p><span class="font-black block">Révélation</span>Qui a trouvé le deal parfait ? Qui a gardé sa marge ?</p>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="sj-role sj-in sj-d2" style="--role-accent:#3FA9FF;">
+          <h3 class="text-xl font-black mb-2 opacity-90">Préparation</h3>
+          <p class="text-5xl font-black mb-1">20 min</p>
+          <p class="opacity-80">Fiches et arguments</p>
+        </div>
+        <div class="sj-role sj-in sj-d3" style="--role-accent:#FFC94D;">
+          <h3 class="text-xl font-black mb-2 opacity-90">Entretiens</h3>
+          <p class="text-5xl font-black mb-1">8 × 7 min</p>
+          <p class="opacity-80">Les agences changent de table</p>
+        </div>
+        <div class="sj-role sj-in sj-d4" style="--role-accent:#5CFFB0;">
+          <h3 class="text-xl font-black mb-2 opacity-90">Signature</h3>
+          <p class="text-5xl font-black mb-1">10 min</p>
+          <p class="opacity-80">Un seul devis par acheteur</p>
+        </div>
+      </div>
+      <p class="sj-in sj-d5 mt-8 text-lg font-semibold opacity-90">🔮 À la fin : le diaporama compare chaque devis signé à la combinaison parfaite.</p>
+    </div>
+  </div>
+
+  <!-- Slide 4 : Préparation -->
+  <div class="slide sj-hero text-center">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="relative z-10 px-6 w-full">
+      <div class="mb-3"><span class="sj-badge">Préparation</span></div>
+      <h2 class="sj-h2 mb-6">Imprégnez-vous de votre rôle — 20 minutes</h2>
+      <div class="timer-shell">
+        <div class="flex justify-center mb-6">
+          <div id="timerPrep" class="timer-circle"><div id="timerPrepText" class="timer-text">20:00</div></div>
+        </div>
+        <div class="flex justify-center gap-3 flex-wrap">
+          <button onclick="startTimer('prep','timerPrep','timerPrepText')" class="sj-btn sj-btn-blue">▶️ Démarrer</button>
+          <button onclick="pauseTimer('prep')" class="sj-btn sj-btn-amber">⏸️ Pause</button>
+          <button onclick="resetTimer('prep','timerPrep','timerPrepText')" class="sj-btn sj-btn-soft">🔄 Reset</button>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3 mt-6 text-left text-sm">
+          <div class="recap-box"><b>Acheteurs</b> : vos contraintes, votre besoin, ce qui vous inquiète.</div>
+          <div class="recap-box"><b>Agences</b> : un argument et une preuve pour chaque profil client.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5 : Entretiens -->
+  <div class="slide sj-hero text-center">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="relative z-10 px-6 w-full">
+      <div class="mb-3"><span class="sj-badge">Entretiens en cours</span></div>
+      <h2 class="sj-h2 mb-6">Découvrir, proposer, négocier — 7 minutes</h2>
+      <div class="timer-shell">
+        <div class="mb-4">
+          <span class="rot-pill">🔁 Rotation <span id="rotNum">1</span> / 8</span>
+          <div class="rot-steps" id="rotSteps"></div>
+        </div>
+        <div class="flex justify-center mb-6">
+          <div id="timerRot" class="timer-circle"><div id="timerRotText" class="timer-text">7:00</div></div>
+        </div>
+        <div class="flex justify-center gap-3 flex-wrap">
+          <button onclick="startTimer('rot','timerRot','timerRotText')" class="sj-btn sj-btn-blue">▶️ Démarrer</button>
+          <button onclick="pauseTimer('rot')" class="sj-btn sj-btn-amber">⏸️ Pause</button>
+          <button onclick="nextRotation()" id="nextRotBtn" class="sj-btn sj-btn-soft">Rotation suivante →</button>
+        </div>
+        <p class="mt-5 text-sm font-semibold text-slate-600">À chaque fin de rotation, le vendeur remet son devis et les agences changent de table.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6 : Signature -->
+  <div class="slide sj-hero text-center">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="relative z-10 px-6 w-full">
+      <div class="mb-3"><span class="sj-badge">Signature</span></div>
+      <h2 class="sj-h2 mb-6">Acheteurs : signez un seul devis — 10 minutes</h2>
+      <div class="timer-shell">
+        <div class="flex justify-center mb-6">
+          <div id="timerSign" class="timer-circle"><div id="timerSignText" class="timer-text">10:00</div></div>
+        </div>
+        <div class="flex justify-center gap-3 flex-wrap">
+          <button onclick="startTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-blue">▶️ Démarrer</button>
+          <button onclick="pauseTimer('sign')" class="sj-btn sj-btn-amber">⏸️ Pause</button>
+          <button onclick="resetTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-soft">🔄 Reset</button>
+        </div>
+        <p class="mt-5 text-sm font-semibold text-slate-600">Relisez vos contraintes : un devis hors budget ou qui oublie un impératif ne vaut rien.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7 : Moment de vérité -->
+  <div class="slide sj-hero text-center">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="sj-blob b2"></div>
+    <div class="sj-blob b3"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-6">
+      <div class="sj-in sj-d1 mb-4"><span class="sj-badge">Moment de vérité</span></div>
+      <div class="sj-counter sj-in sj-d2 mb-4">✍️</div>
+      <h2 class="sj-h2 sj-in sj-d3 mb-4">Les devis sont signés…</h2>
+      <p class="sj-in sj-d4 text-xl font-semibold opacity-90 mb-10">Qui a trouvé le deal parfait ? Qui a protégé sa marge ? 💶</p>
+      <div class="sj-in sj-d5"><button onclick="changeSlide(1)" class="sj-cta">Saisir les devis <span class="arrow">→</span></button></div>
+    </div>
+  </div>
+
+  <!-- Slide 8 : Saisie -->
+  <div class="slide scroll sj-hero" data-enter="entry">
+    <div class="sj-grid"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 md:px-6 w-full py-6">
+      <div class="text-center mb-5">
+        <div class="mb-2"><span class="sj-badge">Côté acheteurs</span></div>
+        <h2 class="sj-h2 mb-2">Saisie des devis signés</h2>
+        <p class="opacity-85 font-semibold">Un écran par acheteur : recopiez le devis qu'il a signé.</p>
+      </div>
+      <div id="buyerTabs" class="buyer-tabs mb-5"></div>
+      <div id="entryCard" class="entry-card"></div>
+      <div class="flex justify-center gap-3 mt-5 flex-wrap">
+        <button onclick="resetEntries()" class="sj-btn sj-btn-sm sj-btn-ghost">🧹 Tout effacer</button>
+        <button onclick="changeSlide(1)" class="sj-btn sj-btn-white">Révéler les résultats ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9 : Révélation acheteurs -->
+  <div class="slide scroll sj-hero" data-enter="buyers">
+    <div class="sj-grid"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 md:px-6 w-full py-6">
+      <div class="text-center mb-6">
+        <div class="mb-2"><span class="sj-badge">Côté acheteurs</span></div>
+        <h2 class="sj-h2 mb-2">Le deal était-il parfait ?</h2>
+        <p class="opacity-85 font-semibold mb-4">Appuie sur une carte pour découvrir le score de l'acheteur</p>
+        <div class="flex justify-center gap-3 flex-wrap">
+          <button onclick="revealAllBuyers()" class="sj-btn sj-btn-sm sj-btn-white">Tout révéler ✨</button>
+          <button onclick="hideAllBuyers()" class="sj-btn sj-btn-sm sj-btn-ghost">↺ Retourner les cartes</button>
+        </div>
+      </div>
+      <div id="buyers-grid"></div>
+    </div>
+  </div>
+
+  <!-- Slide 10 : Agences -->
+  <div class="slide scroll sj-hero" data-enter="agencies">
+    <div class="sj-grid"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 md:px-6 w-full py-6">
+      <div class="text-center mb-6">
+        <div class="mb-2"><span class="sj-badge">Côté agences</span></div>
+        <h2 class="sj-h2 mb-2">Objectif de marge atteint ?</h2>
+        <p class="opacity-85 font-semibold">Marge réalisée sur les devis signés, comparée à l'objectif (trait noir)</p>
+      </div>
+      <div id="agencyGauges" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- Slide 11 : Classements -->
+  <div class="slide scroll sj-hero" data-enter="results">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 md:px-6 w-full py-6">
+      <div class="text-center mb-6">
+        <div class="mb-2"><span class="sj-badge">Résultats</span></div>
+        <h2 class="sj-h2">🏆 Les classements</h2>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="sj-panel">
+          <h3 class="text-2xl font-black text-center mb-4">Acheteurs</h3>
+          <div id="podiumBuyers" class="podium mb-4"></div>
+          <div id="rankBuyers" class="space-y-2"></div>
+        </div>
+        <div class="sj-panel">
+          <h3 class="text-2xl font-black text-center mb-4">Agences</h3>
+          <div id="podiumAgencies" class="podium mb-4"></div>
+          <div id="rankAgencies" class="space-y-2"></div>
+        </div>
+      </div>
+      <div id="perfectDeals" class="sj-panel mt-6 text-center"></div>
+    </div>
+  </div>
+
+  <!-- Slide 12 : Débrief -->
+  <div class="slide scroll sj-hero">
+    <div class="sj-grid"></div>
+    <div class="sj-blob b1"></div>
+    <div class="sj-blob b2"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 w-full my-auto py-8 text-center">
+      <div class="sj-in sj-d1 mb-3"><span class="sj-badge">Débrief</span></div>
+      <h2 class="sj-h2 sj-in sj-d2 mb-8">Ce qu'on retient</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="sj-point debrief-q sj-in sj-d2" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">1</span>
+          <p><span class="font-black block">La découverte</span>Quelle question a fait parler l'acheteur de son vrai besoin ? Qui ne l'a jamais posée ?</p>
+        </div>
+        <div class="sj-point debrief-q sj-in sj-d3" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">2</span>
+          <p><span class="font-black block">L'offre</span>Quelles options inutiles ont été vendues ? Qu'ont-elles coûté à l'acheteur… et à la relation ?</p>
+        </div>
+        <div class="sj-point debrief-q sj-in sj-d4" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">3</span>
+          <p><span class="font-black block">La négociation</span>Où était le point d'équilibre de la remise ? Qu'avez-vous obtenu en échange ?</p>
+        </div>
+        <div class="sj-point debrief-q sj-in sj-d5" style="align-items:flex-start; padding:16px; background:rgba(255,255,255,.12)">
+          <span class="sj-step-num">4</span>
+          <p><span class="font-black block">Le gagnant-gagnant</span>Quels deals ont satisfait les deux côtés ? Qu'avaient-ils en commun ?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Modal : combinaison parfaite -->
+<div id="modal" class="modal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-box">
+    <div class="flex justify-between items-start gap-4 mb-3">
+      <h3 id="modalTitle" class="text-2xl font-black text-[#061A5C]"></h3>
+      <button onclick="closeModal()" class="sj-btn sj-btn-sm sj-btn-soft" aria-label="Fermer">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/**************************************************************
+ * LE DEAL PARFAIT — données du jeu
+ * Prix et marges en € HT. pp = par personne, forfait = prix fixe.
+ **************************************************************/
+const AGENCIES = {
+  altitude: {
+    name: "Altitude Équipe", theme: "Sport & aventure", emo: "🏔️", acc: "#3FA9FF", objective: 4700,
+    formules: {
+      defi:       { name: "Journée Défi",          price: 105, marge: 30 },
+      cohesion:   { name: "Séminaire Cohésion",    price: 320, marge: 80 },
+      expedition: { name: "Expédition",            price: 520, marge: 130 }
+    },
+    options: {
+      repli:     { name: "Repli intérieur garanti",           price: 18,   marge: 8,   pp: true },
+      assurance: { name: "Assurance annulation participants", price: 12,   marge: 7,   pp: true },
+      debrief:   { name: "Débriefing cohésion",               price: 900,  marge: 400 },
+      soiree:    { name: "Soirée animée",                     price: 35,   marge: 15,  pp: true },
+      autocar:   { name: "Autocar depuis Paris",              price: 28,   marge: 6,   pp: true },
+      film:      { name: "Film souvenir",                     price: 1200, marge: 600 }
+    }
+  },
+  serenite: {
+    name: "Maison Sérénité", theme: "Bien-être", emo: "🧘", acc: "#5CFFB0", objective: 5400,
+    formules: {
+      respiration: { name: "Journée Respiration",    price: 130, marge: 35 },
+      retraite:    { name: "Retraite Ressourcement", price: 520, marge: 130 },
+      evasion:     { name: "Séjour Évasion",         price: 890, marge: 220 }
+    },
+    options: {
+      facilitateur: { name: "Facilitateur stratégique",    price: 1400, marge: 600 },
+      soins:        { name: "Soins individuels",           price: 90,   marge: 35, pp: true },
+      interieur:    { name: "Programme intérieur garanti", price: 10,   marge: 5,  pp: true },
+      attention:    { name: "Attention en chambre",        price: 30,   marge: 15, pp: true },
+      yoga:         { name: "Yoga au lever",               price: 15,   marge: 8,  pp: true },
+      detox:        { name: "Menus détox",                 price: 25,   marge: 15, pp: true },
+      van:          { name: "Van privé depuis Paris",      price: 45,   marge: 15, pp: true }
+    }
+  },
+  racines: {
+    name: "Racines Séminaires", theme: "Nature & RSE", emo: "🌳", acc: "#10B981", objective: 3500,
+    formules: {
+      journee: { name: "Journée Nature Engagée",   price: 95,  marge: 25 },
+      eco:     { name: "Séminaire Écoresponsable", price: 290, marge: 70 },
+      foret:   { name: "Immersion Forêt",          price: 240, marge: 60 }
+    },
+    options: {
+      fresque:   { name: "Fresque du Climat",         price: 25,  marge: 10,  pp: true },
+      solidaire: { name: "Demi-journée solidaire",    price: 600, marge: 250 },
+      bilan:     { name: "Bilan carbone du séminaire", price: 350, marge: 200 },
+      grange:    { name: "Grange de repli",           price: 12,  marge: 5,   pp: true },
+      diner:     { name: "Dîner gastronomique local", price: 40,  marge: 15,  pp: true },
+      kit:       { name: "Kit écoresponsable",        price: 9,   marge: 5,   pp: true }
+    }
+  },
+  neo: {
+    name: "Néo Expériences", theme: "Immersif & tech", emo: "🥽", acc: "#A78BFA", objective: 3700,
+    formules: {
+      escape:    { name: "Escape Lab",           price: 95,  marge: 30 },
+      journee:   { name: "Journée Immersive",    price: 190, marge: 50 },
+      signature: { name: "Expérience Signature", price: 560, marge: 140 }
+    },
+    options: {
+      integration: { name: "Mission d'intégration",      price: 600,  marge: 250 },
+      report:      { name: "Report de date sans frais",  price: 8,    marge: 6,   pp: true },
+      prospective: { name: "Atelier prospective",        price: 35,   marge: 15,  pp: true },
+      photobooth:  { name: "Photobooth 3D",              price: 650,  marge: 350 },
+      cocktail:    { name: "Cocktail premium",           price: 30,   marge: 14,  pp: true },
+      video:       { name: "Captation vidéo",            price: 1100, marge: 550 }
+    }
+  },
+  palette: {
+    name: "Atelier Palette", theme: "Créatif & artistique", emo: "🎨", acc: "#FF94E8", objective: 4400,
+    formules: {
+      fresque:   { name: "Atelier Fresque",               price: 120, marge: 35 },
+      creation:  { name: "Journée Création & Vernissage", price: 210, marge: 55 },
+      residence: { name: "Résidence Créative",            price: 560, marge: 140 }
+    },
+    options: {
+      ideation:  { name: "Atelier d'idéation",         price: 1500, marge: 650 },
+      secret:    { name: "Programme secret",           price: 60,   marge: 25,  pp: true },
+      impro:     { name: "Improvisation théâtrale",    price: 900,  marge: 400 },
+      oeuvre:    { name: "Œuvre livrée au bureau",     price: 400,  marge: 200 },
+      aquarelle: { name: "Cours d'aquarelle",          price: 45,   marge: 20,  pp: true },
+      photo:     { name: "Photographe professionnel",  price: 700,  marge: 350 }
+    }
+  },
+  cap: {
+    name: "Cap Leaders", theme: "Leadership & managers", emo: "🧭", acc: "#FFAD5C", objective: 5700,
+    formules: {
+      matinee:  { name: "Matinée Inspiration",        price: 110, marge: 30 },
+      codir:    { name: "Journée Codir",              price: 230, marge: 70 },
+      parcours: { name: "Parcours Nouveaux Managers", price: 590, marge: 150 }
+    },
+    options: {
+      comediens:    { name: "Mises en situation avec comédiens", price: 1600, marge: 700 },
+      coaching:     { name: "Coaching de suivi",                  price: 90,   marge: 40,  pp: true },
+      facilitation: { name: "Facilitation de séance stratégique", price: 1200, marge: 500 },
+      test:         { name: "Test de personnalité",               price: 60,   marge: 30,  pp: true },
+      conferencier: { name: "Conférencier célèbre",               price: 3500, marge: 1200 },
+      livret:       { name: "Livret de bord",                     price: 25,   marge: 12,  pp: true }
+    }
+  },
+  prestige: {
+    name: "Maison Prestige", theme: "Premium", emo: "🏰", acc: "#FFC94D", objective: 7200,
+    formules: {
+      journee: { name: "Journée d'Exception", price: 280,  marge: 80 },
+      sejour:  { name: "Séjour d'Exception",  price: 650,  marge: 170 },
+      voyage:  { name: "Grand Voyage",        price: 1450, marge: 320 }
+    },
+    options: {
+      accueil:   { name: "Accueil personnalisé",       price: 40,  marge: 18, pp: true },
+      gala:      { name: "Dîner de gala et trophées",  price: 55,  marge: 25, pp: true },
+      spa:       { name: "Spa privatisé",              price: 50,  marge: 20, pp: true },
+      champagne: { name: "Champagne à volonté",        price: 45,  marge: 25, pp: true },
+      helico:    { name: "Survol en hélicoptère",      price: 180, marge: 60, pp: true },
+      vip:       { name: "Voiturier et accueil VIP",   price: 20,  marge: 10, pp: true }
+    }
+  },
+  terres: {
+    name: "Terres & Tables", theme: "Gastronomie & terroir", emo: "🧺", acc: "#FF7575", objective: 3600,
+    formules: {
+      tablee:     { name: "Journée Tablée",              price: 85,  marge: 22 },
+      guinguette: { name: "Journée & Soirée Guinguette", price: 140, marge: 35 },
+      sejour:     { name: "Séjour Terroir",              price: 380, marge: 95 }
+    },
+    options: {
+      autocar:   { name: "Autocar depuis votre site", price: 1200, marge: 300 },
+      trophees:  { name: "Remise des trophées",       price: 450,  marge: 200 },
+      zerogaspi: { name: "Atelier zéro gaspillage",   price: 15,   marge: 6,  pp: true },
+      vins:      { name: "Dégustation de vins",       price: 25,   marge: 12, pp: true },
+      chef:      { name: "Chef étoilé en cuisine",    price: 70,   marge: 30, pp: true },
+      panier:    { name: "Panier garni à emporter",   price: 30,   marge: 12, pp: true }
+    }
+  }
+};
+
+/* Pour chaque acheteur :
+ * - signable : formules qui respectent ses impératifs, agence par agence (budget vérifié à part)
+ * - points   : agence parfaite (40) et acceptables (20), avec la formule (20),
+ *              l'option inquiétude (15) et l'option besoin (10) qui rapportent */
+const BUYERS = [
+  {
+    id: "altheris", name: "Laboratoires Altheris", emo: "🧪", n: 40, budget: 14000, seuil: 13700,
+    perfect: "altitude",
+    points: {
+      altitude: { status: "parfaite",   formule: "cohesion", inq: "repli",     besoin: "debrief" },
+      serenite: { status: "acceptable", formule: null,       inq: "interieur", besoin: null },
+      racines:  { status: "acceptable", formule: "eco",      inq: "grange",    besoin: null }
+    },
+    signable: {
+      altitude: ["defi", "cohesion"], serenite: ["respiration", "retraite"], racines: ["journee", "eco"],
+      neo: ["journee", "signature"], palette: ["creation"], cap: [], prestige: ["journee", "sejour"], terres: ["sejour"]
+    }
+  },
+  {
+    id: "payflow", name: "Payflow", emo: "💳", n: 25, budget: 5400, seuil: 5292,
+    perfect: "neo",
+    points: {
+      neo:      { status: "parfaite",   formule: "journee",  inq: "report", besoin: "integration" },
+      palette:  { status: "acceptable", formule: "creation", inq: null,     besoin: null },
+      altitude: { status: "acceptable", formule: "defi",     inq: null,     besoin: "debrief" }
+    },
+    signable: {
+      altitude: ["defi"], serenite: ["respiration"], racines: [], neo: ["journee"], palette: ["creation"],
+      cap: ["codir", "matinee"], prestige: ["journee"], terres: ["tablee", "guinguette"]
+    }
+  },
+  {
+    id: "lefort", name: "Lefort & Associés", emo: "⚖️", n: 15, budget: 10200, seuil: 9996,
+    perfect: "serenite",
+    points: {
+      serenite: { status: "parfaite",   formule: "retraite", inq: "facilitateur", besoin: "soins" },
+      prestige: { status: "acceptable", formule: "sejour",   inq: null,           besoin: "spa" },
+      cap:      { status: "acceptable", formule: "parcours", inq: "facilitation", besoin: null }
+    },
+    signable: {
+      altitude: [], serenite: ["retraite"], racines: [], neo: ["signature"], palette: ["residence"],
+      cap: ["parcours"], prestige: ["sejour"], terres: ["sejour"]
+    }
+  },
+  {
+    id: "batiprim", name: "Batiprim", emo: "🏗️", n: 60, budget: 6500, seuil: 6370,
+    perfect: "terres",
+    points: {
+      terres:   { status: "parfaite",   formule: "tablee", inq: "autocar", besoin: "trophees" },
+      altitude: { status: "acceptable", formule: "defi",   inq: null,      besoin: null },
+      neo:      { status: "acceptable", formule: "escape", inq: null,      besoin: null }
+    },
+    signable: {
+      altitude: ["defi"], serenite: ["respiration"], racines: [], neo: ["escape", "journee"], palette: ["fresque"],
+      cap: [], prestige: ["journee"], terres: ["tablee", "guinguette"]
+    }
+  },
+  {
+    id: "lumea", name: "Lumea", emo: "🌸", n: 12, budget: 8600, seuil: 8428,
+    perfect: "palette",
+    points: {
+      palette:  { status: "parfaite",   formule: "residence", inq: "secret", besoin: "ideation" },
+      racines:  { status: "acceptable", formule: "foret",     inq: null,     besoin: null },
+      prestige: { status: "acceptable", formule: "sejour",    inq: null,     besoin: null }
+    },
+    signable: {
+      altitude: [], serenite: ["retraite"], racines: ["foret"], neo: [], palette: ["residence"],
+      cap: ["parcours"], prestige: ["sejour"], terres: []
+    }
+  },
+  {
+    id: "solimut", name: "Solimut", emo: "🤝", n: 50, budget: 6400, seuil: 6272,
+    perfect: "racines",
+    points: {
+      racines: { status: "parfaite",   formule: "journee", inq: "solidaire", besoin: "fresque" },
+      terres:  { status: "acceptable", formule: "tablee",  inq: null,        besoin: "zerogaspi" },
+      cap:     { status: "acceptable", formule: "matinee", inq: null,        besoin: null }
+    },
+    signable: {
+      altitude: ["defi"], serenite: ["respiration"], racines: ["journee"], neo: ["journee"], palette: ["creation"],
+      cap: ["matinee"], prestige: ["journee"], terres: ["tablee", "guinguette"]
+    }
+  },
+  {
+    id: "datavia", name: "Datavia", emo: "📊", n: 20, budget: 14700, seuil: 14406,
+    perfect: "cap",
+    points: {
+      cap:     { status: "parfaite",   formule: "parcours",  inq: "comediens", besoin: "coaching" },
+      palette: { status: "acceptable", formule: "residence", inq: "impro",     besoin: null },
+      neo:     { status: "acceptable", formule: "signature", inq: null,        besoin: null }
+    },
+    signable: {
+      altitude: ["cohesion"], serenite: ["retraite"], racines: [], neo: ["signature"], palette: ["residence"],
+      cap: ["parcours"], prestige: ["sejour"], terres: ["sejour"]
+    }
+  },
+  {
+    id: "axelis", name: "Axelis Assurances", emo: "🛡️", n: 30, budget: 21600, seuil: 21168,
+    perfect: "prestige",
+    points: {
+      prestige: { status: "parfaite",   formule: "sejour",   inq: "gala",     besoin: "accueil" },
+      terres:   { status: "acceptable", formule: "sejour",   inq: "trophees", besoin: null },
+      serenite: { status: "acceptable", formule: "retraite", inq: null,       besoin: "attention" }
+    },
+    signable: {
+      altitude: ["cohesion"], serenite: ["retraite"], racines: ["eco"], neo: ["signature"], palette: [],
+      cap: [], prestige: ["sejour"], terres: ["sejour"]
+    }
+  }
+];
+
+const RULES = {
+  agencyPerfect: 40, agencyAcceptable: 20, formule: 20, inq: 15, besoin: 10, trap: -5,
+  priceGood: 15, priceOk: 5, maxRemise: 10, minMarginRate: 0.15,
+  bonus: 10, bonusBuyerMin: 85, bonusMarginRate: 0.20
+};
+
+/**************************************************************
+ * Calculs (fonctions pures)
+ **************************************************************/
+function priceDeal(buyer, deal) {
+  const ag = AGENCIES[deal.agency];
+  const f = ag.formules[deal.formule];
+  let total = f.price * buyer.n;
+  let marge = f.marge * buyer.n;
+  (deal.options || []).forEach(id => {
+    const o = ag.options[id];
+    total += o.pp ? o.price * buyer.n : o.price;
+    marge += o.pp ? o.marge * buyer.n : o.marge;
+  });
+  const remise = Math.min(Math.max(Number(deal.remise) || 0, 0), RULES.maxRemise);
+  const remiseAmount = total * remise / 100;
+  const final = total - remiseAmount;
+  const margeNet = marge - remiseAmount;
+  return { total, remise, remiseAmount, final, margeBrute: marge, margeNet, rate: final > 0 ? margeNet / final : 0 };
+}
+
+function scoreDeal(buyer, deal) {
+  const res = { signed: false, nul: false, reason: "", lines: [], buyerScore: 0, marge: 0, horsRegles: false,
+                bonus: false, perfect: false, status: "aucun" };
+  if (!deal || !deal.agency || !deal.formule) { res.reason = "Aucun devis signé"; return res; }
+  res.signed = true;
+  const p = priceDeal(buyer, deal);
+  Object.assign(res, { price: p });
+  const allowed = (buyer.signable[deal.agency] || []).includes(deal.formule);
+
+  if (!allowed || p.final > buyer.budget + 0.001) {
+    res.nul = true;
+    res.reason = !allowed ? "Un impératif n'est pas respecté" : "Le prix dépasse le budget";
+    res.lines.push({ label: res.reason, pts: 0, kind: "neg" });
+    return res; // devis nul : 0 pour l'acheteur, rien pour l'agence
+  }
+
+  const ag = AGENCIES[deal.agency];
+  const map = buyer.points[deal.agency];
+  res.status = map ? map.status : "autre";
+  let score = 0;
+
+  const agPts = !map ? 0 : map.status === "parfaite" ? RULES.agencyPerfect : RULES.agencyAcceptable;
+  score += agPts;
+  res.lines.push({ label: `Agence ${res.status}`, pts: agPts, kind: agPts > 0 ? "pos" : "" });
+
+  const fPts = map && map.formule === deal.formule ? RULES.formule : 0;
+  score += fPts;
+  res.lines.push({ label: ag.formules[deal.formule].name, pts: fPts, kind: fPts > 0 ? "pos" : "" });
+
+  (deal.options || []).forEach(id => {
+    let pts = RULES.trap, label = ag.options[id].name;
+    if (map && map.inq === id) pts = RULES.inq;
+    else if (map && map.besoin === id) pts = RULES.besoin;
+    score += pts;
+    res.lines.push({ label, pts, kind: pts > 0 ? "pos" : "neg" });
+  });
+
+  const prPts = p.final <= buyer.seuil + 0.001 ? RULES.priceGood : RULES.priceOk;
+  score += prPts;
+  res.lines.push({ label: `Prix ${euro(p.final)}`, pts: prPts, kind: "pos" });
+
+  score = Math.max(0, score);
+
+  res.horsRegles = p.rate < RULES.minMarginRate;
+  res.marge = res.horsRegles ? 0 : p.margeNet;
+
+  if (score >= RULES.bonusBuyerMin && !res.horsRegles && p.rate >= RULES.bonusMarginRate) {
+    res.bonus = true;
+    score += RULES.bonus;
+    res.lines.push({ label: "Bonus gagnant-gagnant", pts: RULES.bonus, kind: "pos" });
+  }
+  res.buyerScore = score;
+
+  const perfectMap = buyer.points[buyer.perfect];
+  const opts = deal.options || [];
+  res.perfect = deal.agency === buyer.perfect && deal.formule === perfectMap.formule &&
+                opts.includes(perfectMap.inq) && opts.includes(perfectMap.besoin);
+  return res;
+}
+
+function computeAll(entries) {
+  const buyers = BUYERS.map(b => ({ buyer: b, deal: entries[b.id], res: scoreDeal(b, entries[b.id]) }));
+  const agencies = Object.entries(AGENCIES).map(([id, ag]) => {
+    const deals = buyers.filter(x => x.res.signed && !x.res.nul && x.deal.agency === id);
+    const marge = deals.reduce((s, x) => s + x.res.marge, 0);
+    const bonus = deals.filter(x => x.res.bonus).length * RULES.bonus;
+    const pct = (marge / ag.objective) * 100;
+    return { id, ag, deals, marge, bonus, pct, score: Math.round(pct) + bonus };
+  });
+  return { buyers, agencies };
+}
+
+const euro = n => `${Math.round(n).toLocaleString("fr-FR")} €`;
+
+if (typeof module !== "undefined") module.exports = { AGENCIES, BUYERS, RULES, priceDeal, scoreDeal, computeAll };
+
+/**************************************************************
+ * Interface
+ **************************************************************/
+if (typeof document !== "undefined") {
+
+  const LS_KEY = "ldp_devis_v1";
+  let entries = {};
+  let currentBuyer = 0;
+  try { entries = JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {}; } catch (e) { entries = {}; }
+  function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(entries)); } catch (e) {} }
+
+  /* Slides */
+  let currentSlide = 0;
+  const slides = () => document.querySelectorAll(".slide");
+
+  window.goToSlide = function (index) {
+    const all = slides();
+    if (index < 0 || index >= all.length || index === currentSlide) return;
+    all[currentSlide].classList.remove("active");
+    currentSlide = index;
+    all[currentSlide].classList.add("active");
+    all[currentSlide].scrollTop = 0;
+    updateSlideCounter();
+    onSlideEnter(all[currentSlide].dataset.enter);
+  };
+  window.changeSlide = d => goToSlide(currentSlide + d);
+
+  function updateSlideCounter() {
+    const total = slides().length;
+    document.getElementById("currentSlideNumber").textContent = currentSlide + 1;
+    document.getElementById("totalSlides").textContent = total;
+    document.getElementById("prevBtn").disabled = currentSlide === 0;
+    document.getElementById("nextBtn").disabled = currentSlide === total - 1;
+    document.getElementById("progressBar").style.width = `${((currentSlide + 1) / total) * 100}%`;
+    document.querySelectorAll("#slideDots button").forEach((dot, i) => dot.classList.toggle("on", i === currentSlide));
+  }
+  function buildDots() {
+    const dots = document.getElementById("slideDots");
+    slides().forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.setAttribute("aria-label", `Slide ${i + 1}`);
+      dot.onclick = () => goToSlide(i);
+      dots.appendChild(dot);
+    });
+  }
+  function onSlideEnter(name) {
+    if (name === "entry") renderEntry();
+    if (name === "buyers") renderBuyerCards();
+    if (name === "agencies") renderAgencies();
+    if (name === "results") renderResults();
+  }
+
+  document.addEventListener("keydown", e => {
+    const tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "select" || tag === "textarea") return;
+    if (e.key === "ArrowRight") changeSlide(1);
+    if (e.key === "ArrowLeft") changeSlide(-1);
+    if (e.key === "Escape") closeModal();
+  });
+
+  /* Logos flottants */
+  function buildFloaters() {
+    const spots = ["top:12%; left:8%", "top:20%; right:10%", "bottom:16%; left:12%", "bottom:12%; right:14%",
+                   "top:48%; left:3%", "top:52%; right:4%", "top:6%; left:42%", "bottom:4%; left:46%"];
+    const items = ["🏔️", "💶", "🏰", "🎨", "✍️", "🧺", "🤝", "🥽"];
+    document.getElementById("heroFloaters").innerHTML = items.map((it, i) => {
+      const delay = `animation-delay:${-i * 0.8}s, ${0.1 + i * 0.1}s`;
+      const coin = it === "💶" || it === "✍️" || it === "🤝" ? " coin" : "";
+      return `<div class="sj-floater${coin}" style="${spots[i]}; ${delay}">${it}</div>`;
+    }).join("");
+  }
+
+  /* Chronos */
+  const timers = {
+    prep: { minutes: 20, interval: null, paused: false, current: 0, total: 1200 },
+    rot:  { minutes: 7,  interval: null, paused: false, current: 0, total: 420 },
+    sign: { minutes: 10, interval: null, paused: false, current: 0, total: 600 }
+  };
+  function beep() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      [0, .35, .7].forEach(t => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.frequency.value = 880; o.connect(g); g.connect(ctx.destination);
+        g.gain.setValueAtTime(.25, ctx.currentTime + t);
+        g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + t + .3);
+        o.start(ctx.currentTime + t); o.stop(ctx.currentTime + t + .3);
+      });
+    } catch (e) {}
+  }
+  window.startTimer = function (key, circleId, textId) {
+    const t = timers[key];
+    clearInterval(t.interval);
+    t.paused = false;
+    document.getElementById(circleId).classList.remove("done");
+    if (t.current <= 0) { t.total = t.minutes * 60; t.current = t.total; }
+    t.interval = setInterval(() => {
+      if (t.paused) return;
+      t.current--;
+      updateTimerDisplay(circleId, textId, t.current, t.total);
+      if (t.current <= 0) {
+        clearInterval(t.interval);
+        const c = document.getElementById(circleId);
+        c.style.background = "conic-gradient(from 0deg, #ef4444 360deg, #ef4444 360deg)";
+        c.classList.add("done");
+        document.getElementById(textId).textContent = "FINI !";
+        t.current = 0;
+        beep();
+      }
+    }, 1000);
+  };
+  window.pauseTimer = key => { timers[key].paused = !timers[key].paused; };
+  window.resetTimer = function (key, circleId, textId) {
+    const t = timers[key];
+    clearInterval(t.interval);
+    t.total = t.minutes * 60; t.current = t.total; t.paused = false;
+    document.getElementById(circleId).classList.remove("done");
+    updateTimerDisplay(circleId, textId, t.current, t.total);
+  };
+  function updateTimerDisplay(circleId, textId, current, total) {
+    const m = Math.floor(current / 60), s = current % 60;
+    document.getElementById(textId).textContent = `${m}:${String(s).padStart(2, "0")}`;
+    const deg = ((total - current) / total) * 360;
+    const color = current > total * 0.3 ? "#10b981" : current > total * 0.1 ? "#f59e0b" : "#ef4444";
+    document.getElementById(circleId).style.background = `conic-gradient(from 0deg, ${color} ${deg}deg, #e5e7eb ${deg}deg)`;
+  }
+
+  /* Rotations */
+  let rotation = 1;
+  function renderRotation() {
+    document.getElementById("rotNum").textContent = rotation;
+    document.getElementById("rotSteps").innerHTML = Array.from({ length: 8 }, (_, i) =>
+      `<span class="${i + 1 < rotation ? "done" : i + 1 === rotation ? "now" : ""}"></span>`).join("");
+    const btn = document.getElementById("nextRotBtn");
+    btn.textContent = rotation < 8 ? "Rotation suivante →" : "↺ Recommencer à 1";
+  }
+  window.nextRotation = function () {
+    rotation = rotation < 8 ? rotation + 1 : 1;
+    resetTimer("rot", "timerRot", "timerRotText");
+    renderRotation();
+  };
+
+  /* ===== Saisie ===== */
+  function isFilled(id) { const d = entries[id]; return d && (d.none || (d.agency && d.formule)); }
+
+  function renderTabs() {
+    document.getElementById("buyerTabs").innerHTML = BUYERS.map((b, i) =>
+      `<button class="buyer-tab ${i === currentBuyer ? "on" : ""} ${isFilled(b.id) ? "filled" : ""}" onclick="selectBuyer(${i})">
+        <span class="ok">${isFilled(b.id) ? "✓" : i + 1}</span>${b.emo} ${b.name}</button>`).join("");
+  }
+  window.selectBuyer = i => { currentBuyer = i; renderEntry(); };
+
+  function renderEntry() {
+    renderTabs();
+    const b = BUYERS[currentBuyer];
+    const d = entries[b.id] || {};
+    const ag = d.agency ? AGENCIES[d.agency] : null;
+
+    let html = `
+      <div class="flex items-center justify-between gap-3 flex-wrap mb-5">
+        <div class="flex items-center gap-3">
+          <span class="inv-num" style="width:52px;height:52px;font-size:1.6rem;background:#EEF3FE">${b.emo}</span>
+          <div>
+            <div class="text-2xl font-black text-[#061A5C]">${b.name}</div>
+            <div class="text-sm font-semibold text-slate-500">${b.n} participants · budget ${euro(b.budget)} HT</div>
+          </div>
+        </div>
+        <span class="inv-total">Acheteur ${currentBuyer + 1} / ${BUYERS.length}</span>
+      </div>
+
+      <div class="entry-label">1. Agence du devis signé</div>
+      <div class="agency-grid mb-5">
+        ${Object.entries(AGENCIES).map(([id, a]) => `
+          <button class="choice ${d.agency === id ? "on" : ""}" onclick="setAgency('${id}')">
+            <span class="emo">${a.emo}</span><span>${a.name}<span class="sub">${a.theme}</span></span>
+          </button>`).join("")}
+        <button class="choice none ${d.none ? "on" : ""}" onclick="setNone()">
+          <span class="emo">🚫</span><span>Aucun devis signé</span>
+        </button>
+      </div>`;
+
+    if (ag) {
+      html += `
+        <div class="entry-label">2. Formule</div>
+        <div class="grid sm:grid-cols-3 gap-2 mb-5">
+          ${Object.entries(ag.formules).map(([id, f]) => `
+            <button class="choice ${d.formule === id ? "on" : ""}" onclick="setFormule('${id}')">
+              <span>${f.name}<span class="sub">${f.price} € / pers.</span></span>
+            </button>`).join("")}
+        </div>
+
+        <div class="entry-label">3. Options cochées sur le devis</div>
+        <div class="grid sm:grid-cols-2 gap-2 mb-5">
+          ${Object.entries(ag.options).map(([id, o]) => {
+            const on = (d.options || []).includes(id);
+            return `<button class="choice ${on ? "on" : ""}" onclick="toggleOption('${id}')">
+              <span class="opt-check">${on ? "✓" : ""}</span>
+              <span>${o.name}<span class="sub">${o.pp ? `${o.price} € / pers.` : `${euro(o.price)} forfait`}</span></span>
+            </button>`;
+          }).join("")}
+        </div>
+
+        <div class="entry-label">4. Remise accordée</div>
+        <div class="flex items-center gap-3 mb-5 flex-wrap">
+          <input id="remiseInput" class="remise-input" type="number" min="0" max="10" step="0.5" inputmode="decimal"
+                 value="${d.remise || 0}" oninput="setRemise(this.value)">
+          <span class="text-xl font-black text-[#061A5C]">%</span>
+          <span class="text-sm font-semibold text-slate-500">maximum 10 %</span>
+        </div>
+        <div id="entryRecap"></div>`;
+    }
+
+    html += `
+      <div class="flex justify-between gap-3 mt-6 flex-wrap">
+        <button class="sj-btn sj-btn-soft" ${currentBuyer === 0 ? "disabled" : ""} onclick="selectBuyer(${currentBuyer - 1})">← Acheteur précédent</button>
+        ${currentBuyer < BUYERS.length - 1
+          ? `<button class="sj-btn sj-btn-blue" onclick="selectBuyer(${currentBuyer + 1})">Acheteur suivant →</button>`
+          : `<button class="sj-btn sj-btn-blue" onclick="changeSlide(1)">Révéler les résultats ✨</button>`}
+      </div>`;
+
+    document.getElementById("entryCard").innerHTML = html;
+    renderRecap();
+  }
+
+  function renderRecap() {
+    const box = document.getElementById("entryRecap");
+    if (!box) return;
+    const b = BUYERS[currentBuyer];
+    const d = entries[b.id] || {};
+    if (!d.agency || !d.formule) { box.innerHTML = `<div class="recap-box text-sm font-semibold text-slate-500">Choisissez une formule pour voir le prix du devis.</div>`; return; }
+    const p = priceDeal(b, d);
+    const raw = Number(d.remise) || 0;
+    box.innerHTML = `
+      <div class="recap-box flex items-center justify-between gap-3 flex-wrap">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wide text-slate-500">Prix du devis</div>
+          <div class="recap-price">${euro(p.final)} HT</div>
+          ${p.remise ? `<div class="text-sm text-slate-500 font-semibold">avant remise : ${euro(p.total)}</div>` : ""}
+        </div>
+        <div class="text-right text-sm font-semibold text-slate-600">Budget de l'acheteur<br><b class="text-[#061A5C]">${euro(b.budget)}</b></div>
+      </div>
+      ${raw > RULES.maxRemise ? `<p class="warn mt-2">⚠️ Remise plafonnée à 10 % dans le calcul.</p>` : ""}`;
+  }
+
+  window.setAgency = function (id) {
+    const b = BUYERS[currentBuyer];
+    const prev = entries[b.id] || {};
+    entries[b.id] = prev.agency === id ? prev : { agency: id, formule: null, options: [], remise: prev.remise || 0 };
+    save(); renderEntry();
+  };
+  window.setNone = function () { entries[BUYERS[currentBuyer].id] = { none: true }; save(); renderEntry(); };
+  window.setFormule = function (id) { entries[BUYERS[currentBuyer].id].formule = id; save(); renderEntry(); };
+  window.toggleOption = function (id) {
+    const d = entries[BUYERS[currentBuyer].id];
+    d.options = d.options || [];
+    d.options = d.options.includes(id) ? d.options.filter(x => x !== id) : [...d.options, id];
+    save(); renderEntry();
+  };
+  window.setRemise = function (v) {
+    const d = entries[BUYERS[currentBuyer].id];
+    d.remise = v === "" ? 0 : Number(v);
+    save(); renderRecap(); renderTabs();
+  };
+  window.resetEntries = function () {
+    if (!confirm("Effacer tous les devis saisis ?")) return;
+    entries = {}; currentBuyer = 0; save(); renderEntry();
+  };
+
+  /* ===== Révélation acheteurs ===== */
+  function verdict(res) {
+    if (!res.signed) return { txt: "Pas de devis", cls: "tag-nul", color: "#6B7280", soft: "#F3F4F6" };
+    if (res.nul) return { txt: "Devis nul ❌", cls: "tag-nul", color: "#DC2626", soft: "#FEE2E2" };
+    if (res.perfect) return { txt: "Deal parfait ✨", cls: "tag-perfect", color: "#D97706", soft: "#FEF3C7" };
+    if (res.buyerScore >= 60) return { txt: "Bon deal 👍", cls: "tag-good", color: "#059669", soft: "#D1FAE5" };
+    return { txt: "Deal à revoir", cls: "tag-mid", color: "#4F46E5", soft: "#E0E7FF" };
+  }
+
+  function renderBuyerCards() {
+    const { buyers } = computeAll(entries);
+    document.getElementById("buyers-grid").innerHTML = buyers.map(({ buyer, deal, res }, i) => {
+      const v = verdict(res);
+      const ag = res.signed ? AGENCIES[deal.agency] : null;
+      return `
+      <div class="co-card buyer" id="bcard-${i}" onclick="this.classList.toggle('revealed')">
+        <div class="co-inner">
+          <div class="co-face co-back">
+            <div class="buyer-emo">${buyer.emo}</div>
+            <div class="font-black text-xl leading-tight">${buyer.name}</div>
+            <div class="opacity-85 font-semibold text-sm mt-1">${ag ? `a signé avec ${ag.emo} ${ag.name}` : "aucun devis signé"}</div>
+          </div>
+          <div class="co-face co-front buyer-front" style="--res:${v.color}; --res-soft:${v.soft}">
+            <div class="flex items-start justify-between gap-2 mb-1">
+              <div class="font-black text-[#061A5C] leading-tight min-w-0">${buyer.emo} ${buyer.name}</div>
+              <div class="co-perf">${res.buyerScore}</div>
+            </div>
+            <div class="mb-2"><span class="co-tag">${v.txt}</span></div>
+            ${ag ? `<div class="text-xs font-semibold text-slate-500 mb-1">${ag.emo} ${ag.name} · ${euro(res.price.final)}</div>` : ""}
+            <div class="flex-1">${res.lines.map(l => `<div class="break-line ${l.kind}"><span>${l.label}</span><b>${l.pts > 0 ? "+" : ""}${l.pts}</b></div>`).join("")}</div>
+            <button class="sj-btn sj-btn-sm sj-btn-soft mt-2" onclick="event.stopPropagation(); openPerfect(${i})">Voir le deal parfait</button>
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+  }
+  window.revealAllBuyers = () => document.querySelectorAll(".co-card.buyer").forEach((c, i) => setTimeout(() => c.classList.add("revealed"), i * 180));
+  window.hideAllBuyers = () => document.querySelectorAll(".co-card.buyer").forEach(c => c.classList.remove("revealed"));
+
+  window.openPerfect = function (i) {
+    const b = BUYERS[i];
+    const rows = Object.entries(b.points).map(([agId, m]) => {
+      const a = AGENCIES[agId];
+      return `<tr class="border-b border-slate-100">
+        <td class="py-2 pr-2 font-bold">${a.emo} ${a.name}<div class="text-xs font-semibold text-slate-500">${m.status}</div></td>
+        <td class="py-2 pr-2">${m.formule ? a.formules[m.formule].name : "—"}</td>
+        <td class="py-2 pr-2">${m.inq ? a.options[m.inq].name : "—"}</td>
+        <td class="py-2">${m.besoin ? a.options[m.besoin].name : "—"}</td></tr>`;
+    }).join("");
+    const pm = b.points[b.perfect];
+    const pp = priceDeal(b, { agency: b.perfect, formule: pm.formule, options: [pm.inq, pm.besoin], remise: 0 });
+    document.getElementById("modalTitle").textContent = `${b.emo} ${b.name} — le deal parfait`;
+    document.getElementById("modalBody").innerHTML = `
+      <p class="mb-4 text-slate-700">Combinaison parfaite : <b>${pp ? euro(pp.final) : ""} HT</b> avant remise, pour un budget de <b>${euro(b.budget)}</b>.
+      Il fallait négocier une remise pour la rendre signable.</p>
+      <div class="overflow-x-auto"><table class="w-full text-sm text-left">
+        <thead><tr class="text-xs uppercase text-slate-500"><th class="pb-2">Agence</th><th class="pb-2">Formule (+20)</th><th class="pb-2">Inquiétude (+15)</th><th class="pb-2">Besoin (+10)</th></tr></thead>
+        <tbody>${rows}</tbody></table></div>
+      <p class="mt-4 text-sm text-slate-500">Toute autre option ajoutée au devis : −5 points.</p>`;
+    document.getElementById("modal").classList.add("show");
+  };
+  window.closeModal = () => document.getElementById("modal").classList.remove("show");
+
+  /* ===== Agences ===== */
+  function renderAgencies() {
+    const { agencies } = computeAll(entries);
+    const maxPct = Math.max(130, ...agencies.map(a => a.pct));
+    document.getElementById("agencyGauges").innerHTML = agencies.map(a => {
+      const w = Math.min(100, (a.pct / maxPct) * 100);
+      const goal = (100 / maxPct) * 100;
+      return `
+      <div class="gauge-row">
+        <div class="flex items-center justify-between gap-3 mb-2 flex-wrap">
+          <div class="flex items-center gap-3">
+            <span class="agency-emo" style="--acc:${a.ag.acc}">${a.ag.emo}</span>
+            <div><div class="font-black text-[#061A5C]">${a.ag.name}</div>
+              <div class="text-xs font-semibold text-slate-500">${a.deals.length} devis signé${a.deals.length > 1 ? "s" : ""}${a.bonus ? ` · bonus gagnant-gagnant +${a.bonus}` : ""}</div></div>
+          </div>
+          <div class="text-right">
+            <div class="font-black text-xl text-[#061A5C] tabular-nums">${Math.round(a.pct)} %</div>
+            <div class="text-xs font-semibold text-slate-500">${euro(a.marge)} / ${euro(a.ag.objective)}</div>
+          </div>
+        </div>
+        <div class="gauge-track"><div class="gauge-fill ${a.pct >= 100 ? "over" : ""}" data-w="${w}"></div><div class="gauge-goal" style="left:calc(${goal}% - 1px)"></div></div>
+      </div>`;
+    }).join("");
+    requestAnimationFrame(() => setTimeout(() => {
+      document.querySelectorAll(".gauge-fill").forEach(el => { el.style.width = el.dataset.w + "%"; });
+    }, 80));
+  }
+
+  /* ===== Classements ===== */
+  const MEDALS = [
+    { medal: "#E5E7EB", dark: "#9CA3AF", h: 150, delay: ".3s", label: "2" },
+    { medal: "#FFD976", dark: "#F59E0B", h: 200, delay: ".6s", label: "1" },
+    { medal: "#F6B88A", dark: "#C2703D", h: 115, delay: "0s", label: "3" }
+  ];
+  function podium(list, el) {
+    const order = [list[1], list[0], list[2]];
+    document.getElementById(el).innerHTML = order.map((it, i) => it ? `
+      <div class="podium-col">
+        <div class="podium-avatar" style="--medal:${MEDALS[i].medal}; --delay:${MEDALS[i].delay}">${it.emo}</div>
+        <div class="text-center font-black text-sm leading-tight mb-2">${it.name}</div>
+        <div class="podium-step" style="height:${MEDALS[i].h}px; --medal:${MEDALS[i].medal}; --medal-dark:${MEDALS[i].dark}; --delay:${MEDALS[i].delay}">
+          <div class="text-3xl font-black">${MEDALS[i].label}</div>
+          <div class="font-black">${it.value}</div>
+        </div>
+      </div>` : `<div class="podium-col"></div>`).join("");
+  }
+  function rankList(list, el) {
+    document.getElementById(el).innerHTML = list.map((it, i) => `
+      <div class="row-white flex items-center gap-3">
+        <span class="rank-pill">${i + 1}</span>
+        <span class="text-xl">${it.emo}</span>
+        <div class="flex-1 min-w-0"><div class="font-black truncate">${it.name}</div>${it.sub ? `<div class="text-xs font-semibold text-slate-500 truncate">${it.sub}</div>` : ""}</div>
+        <span class="inv-total">${it.value}</span>
+      </div>`).join("");
+  }
+  function renderResults() {
+    const { buyers, agencies } = computeAll(entries);
+    const bl = buyers.map(x => ({ emo: x.buyer.emo, name: x.buyer.name, score: x.res.buyerScore, value: `${x.res.buyerScore} pts`,
+      sub: x.res.signed && !x.res.nul ? AGENCIES[x.deal.agency].name : (x.res.nul ? "devis nul" : "aucun devis") }))
+      .sort((a, b) => b.score - a.score);
+    const al = agencies.map(a => ({ emo: a.ag.emo, name: a.ag.name, score: a.score, value: `${a.score} pts`,
+      sub: `${Math.round(a.pct)} % de l'objectif${a.bonus ? ` + ${a.bonus} bonus` : ""}` }))
+      .sort((a, b) => b.score - a.score);
+    podium(bl, "podiumBuyers"); rankList(bl, "rankBuyers");
+    podium(al, "podiumAgencies"); rankList(al, "rankAgencies");
+
+    const perfect = buyers.filter(x => x.res.perfect);
+    const gg = buyers.filter(x => x.res.bonus);
+    document.getElementById("perfectDeals").innerHTML = `
+      <h3 class="text-2xl font-black mb-3">✨ Deals parfaits : ${perfect.length} / ${BUYERS.length}</h3>
+      <div class="flex flex-wrap justify-center gap-2 mb-3">${perfect.length ? perfect.map(x =>
+        `<span class="sj-badge">${x.buyer.emo} ${x.buyer.name} × ${AGENCIES[x.deal.agency].emo} ${AGENCIES[x.deal.agency].name}</span>`).join("") :
+        `<span class="opacity-85 font-semibold">Aucun deal parfait cette fois… la découverte était-elle assez poussée ?</span>`}</div>
+      <p class="font-semibold opacity-90">🤝 Deals gagnant-gagnant : ${gg.length}</p>`;
+    if (buyers.some(x => x.res.signed)) launchConfetti();
+  }
+
+  function launchConfetti() {
+    const colors = ["#FFC94D", "#5CFFB0", "#3FA9FF", "#FF94E8", "#FFFFFF"];
+    for (let i = 0; i < 90; i++) {
+      const piece = document.createElement("div");
+      piece.className = "confetti";
+      piece.style.left = Math.random() * 100 + "vw";
+      piece.style.background = colors[i % colors.length];
+      piece.style.setProperty("--dx", (Math.random() * 200 - 100) + "px");
+      piece.style.setProperty("--rot", (Math.random() * 720) + "deg");
+      piece.style.animationDuration = (2.5 + Math.random() * 2) + "s";
+      piece.style.animationDelay = (Math.random() * .6) + "s";
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 5500);
+    }
+  }
+
+  /* Init */
+  buildDots();
+  buildFloaters();
+  renderRotation();
+  updateSlideCounter();
+}
+
+</script>
+</body>
+</html>
