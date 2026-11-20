@@ -633,7 +633,11 @@ main{
 .sj-logorow{display:flex;gap:clamp(6px,1vw,12px);justify-content:center;flex-wrap:nowrap;font-size:inherit;line-height:1}
 .sj-logorow img{width:clamp(34px,5.4vw,72px);height:clamp(34px,5.4vw,72px);object-fit:contain;border-radius:20%;background:#fff;padding:4px;box-shadow:0 8px 24px rgba(6,26,92,.4)}
 .sj-point .emo{display:flex;align-items:center;justify-content:center;font-weight:900;color:#0B2A7A;background:#FFC94D;border-radius:9999px}
-  </style>
+  .podium-col.pending{visibility:hidden}
+  .podium-col.pending .podium-avatar,.podium-col.pending .podium-step{animation:none}
+.podium-col:not(.pending) .podium-avatar{animation-delay:.25s}
+.podium-col:not(.pending) .podium-step{animation-delay:0s}
+</style>
 </head>
 
 <body class="h-full bg-gray-50">
@@ -916,12 +920,14 @@ main{
       <div class="grid lg:grid-cols-2 gap-6">
         <div class="sj-panel">
           <h3 class="text-2xl font-black text-center mb-4">Acheteurs</h3>
-          <div id="podiumBuyers" class="podium mb-4"></div>
+          <div id="podiumBuyers" class="podium mb-2"></div>
+          <div class="text-center mb-4"><button id="podiumBuyersBtn" onclick="revealPodium('podiumBuyers')" class="sj-btn sj-btn-sm sj-btn-white"></button></div>
           <div id="rankBuyers" class="space-y-2"></div>
         </div>
         <div class="sj-panel">
           <h3 class="text-2xl font-black text-center mb-4">Agences</h3>
-          <div id="podiumAgencies" class="podium mb-4"></div>
+          <div id="podiumAgencies" class="podium mb-2"></div>
+          <div class="text-center mb-4"><button id="podiumAgenciesBtn" onclick="revealPodium('podiumAgencies')" class="sj-btn sj-btn-sm sj-btn-white"></button></div>
           <div id="rankAgencies" class="space-y-2"></div>
         </div>
       </div>
@@ -1685,20 +1691,39 @@ if (typeof document !== "undefined") {
     { medal: "#FFD976", dark: "#F59E0B", h: 200, delay: ".6s", label: "1" },
     { medal: "#F6B88A", dark: "#C2703D", h: 115, delay: "0s", label: "3" }
   ];
+  const PODIUM_ORDER = [2, 0, 1]; /* révélation : 3e, 2e, 1re (indices des colonnes 2e-1re-3e) */
+  const PODIUM_LABEL = ["la 3e place", "la 2e place", "la 1re place"];
   function podium(list, el) {
     const order = [list[1], list[0], list[2]];
-    document.getElementById(el).innerHTML = order.map((it, i) => it ? `
-      <div class="podium-col">
-        <div class="podium-avatar" style="--medal:${MEDALS[i].medal}; --delay:${MEDALS[i].delay}">${it.emo}</div>
+    const box = document.getElementById(el);
+    box.innerHTML = order.map((it, i) => it ? `
+      <div class="podium-col pending">
+        <div class="podium-avatar" style="--medal:${MEDALS[i].medal}">${it.emo}</div>
         <div class="text-center font-black text-sm leading-tight mb-2">${it.name}</div>
-        <div class="podium-step" style="height:${MEDALS[i].h}px; --medal:${MEDALS[i].medal}; --medal-dark:${MEDALS[i].dark}; --delay:${MEDALS[i].delay}">
+        <div class="podium-step" style="height:${MEDALS[i].h}px; --medal:${MEDALS[i].medal}; --medal-dark:${MEDALS[i].dark}">
           <div class="text-3xl font-black">${MEDALS[i].label}</div>
           <div class="font-black">${it.value}</div>
         </div>
       </div>` : `<div class="podium-col"></div>`).join("");
+    box.dataset.step = "0";
+    const btn = document.getElementById(el + "Btn");
+    btn.style.display = "";
+    btn.textContent = "Révéler " + PODIUM_LABEL[0];
   }
+  window.revealPodium = (el) => {
+    const box = document.getElementById(el);
+    const step = +box.dataset.step;
+    if (step >= 3) return;
+    const col = box.children[PODIUM_ORDER[step]];
+    if (col) col.classList.remove("pending");
+    box.dataset.step = String(step + 1);
+    const btn = document.getElementById(el + "Btn");
+    if (step + 1 >= 3) btn.style.display = "none";
+    else btn.textContent = "Révéler " + PODIUM_LABEL[step + 1];
+    if (step === 2) launchConfetti();
+  };
   function rankList(list, el) {
-    document.getElementById(el).innerHTML = list.map((it, i) => `
+    document.getElementById(el).innerHTML = list.map((it, i) => i < 3 ? "" : `
       <div class="row-white flex items-center gap-3">
         <span class="rank-pill">${i + 1}</span>
         <span class="text-xl">${it.emo}</span>
@@ -1725,7 +1750,6 @@ if (typeof document !== "undefined") {
         `<span class="sj-badge">${x.buyer.name} × ${AGENCIES[x.deal.agency].emo} ${AGENCIES[x.deal.agency].name}</span>`).join("") :
         `<span class="opacity-85 font-semibold">Aucun deal parfait cette fois… la découverte était-elle assez poussée ?</span>`}</div>
       <p class="font-semibold opacity-90">Deals gagnant-gagnant : ${gg.length}</p>`;
-    if (buyers.some(x => x.res.signed)) launchConfetti();
   }
 
   function launchConfetti() {
