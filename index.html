@@ -625,6 +625,14 @@ main{
 .tag-nul{ background:#FEE2E2; color:#991B1B; }
 
 .debrief-q{ text-align:left; }
+
+.lg{height:1.3em;width:1.3em;object-fit:contain;display:inline-block;vertical-align:-.3em;border-radius:22%}
+.agency-emo .lg,.choice .emo .lg,.podium-avatar .lg,.inv-num .lg,.buyer-emo .lg{width:100%;height:100%;vertical-align:0}
+.choice .emo{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;flex:none}
+.buyer-emo,.inv-num,.podium-avatar{color:#0B2A7A;font-weight:900}
+.sj-logorow{display:flex;gap:clamp(6px,1vw,12px);justify-content:center;flex-wrap:nowrap;font-size:inherit;line-height:1}
+.sj-logorow img{width:clamp(34px,5.4vw,72px);height:clamp(34px,5.4vw,72px);object-fit:contain;border-radius:20%;background:#fff;padding:4px;box-shadow:0 8px 24px rgba(6,26,92,.4)}
+.sj-point .emo{display:flex;align-items:center;justify-content:center;font-weight:900;color:#0B2A7A;background:#FFC94D;border-radius:9999px}
   </style>
 </head>
 
@@ -666,7 +674,7 @@ main{
         Le Deal<br><span class="shine">Parfait</span>
       </h1>
       <p class="sj-in sj-d3 text-xl md:text-2xl font-semibold opacity-90 mb-10">
-        8 agences · 8 acheteurs · un seul devis à signer 🤝
+        8 agences · 8 acheteurs · un seul devis à signer
       </p>
       <div class="sj-in sj-d4">
         <button onclick="changeSlide(1)" class="sj-cta">C'est parti <span class="arrow">→</span></button>
@@ -687,29 +695,29 @@ main{
       <div class="grid md:grid-cols-[1fr_auto_1fr] gap-6 md:gap-8 items-center">
         <div class="sj-role sj-in sj-d2" style="--role-accent:#FFC94D;">
           <div class="text-center mb-5">
-            <div class="sj-role-pic">🧳</div>
+            <div class="sj-role-pic"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#0B2A7A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="20" width="48" height="32" rx="5" fill="#CFE0FF"/><path d="M24 20v-6a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6M8 34h48"/><rect x="28" y="30" width="8" height="8" rx="2" fill="#FFC94D"/></svg></div>
             <h3 class="text-3xl font-black">Agences</h3>
             <p class="opacity-80 font-semibold">les vendeurs, en binôme</p>
           </div>
-          <div class="sj-mission mb-4">🎯 Objectif : atteindre votre objectif de marge</div>
+          <div class="sj-mission mb-4">Objectif : atteindre votre objectif de marge</div>
           <div class="space-y-2">
-            <div class="sj-point"><span class="emo">🔍</span><p>Découvrez les vrais besoins de chaque client</p></div>
-            <div class="sj-point"><span class="emo">🧩</span><p>Composez la bonne offre : formule et options</p></div>
-            <div class="sj-point"><span class="emo">💶</span><p>Négociez… sans brader votre marge</p></div>
+            <div class="sj-point"><span class="emo">1</span><p>Découvrez les vrais besoins de chaque client</p></div>
+            <div class="sj-point"><span class="emo">2</span><p>Composez la bonne offre : formule et options</p></div>
+            <div class="sj-point"><span class="emo">3</span><p>Négociez… sans brader votre marge</p></div>
           </div>
         </div>
         <div class="flex justify-center sj-in sj-d3"><div class="sj-vs">VS</div></div>
         <div class="sj-role sj-in sj-d4" style="--role-accent:#5CFFB0;">
           <div class="text-center mb-5">
-            <div class="sj-role-pic">🏢</div>
+            <div class="sj-role-pic"><svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#0B2A7A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="8" width="36" height="48" rx="3" fill="#CFE0FF"/><path d="M22 18h6M36 18h6M22 28h6M36 28h6M22 38h6M36 38h6"/><path d="M27 56V47h10v9" fill="#FFC94D"/></svg></div>
             <h3 class="text-3xl font-black">Acheteurs</h3>
             <p class="opacity-80 font-semibold">les entreprises clientes</p>
           </div>
-          <div class="sj-mission mb-4">🤝 Objectif : signer le meilleur deal en respectant vos contraintes</div>
+          <div class="sj-mission mb-4">Objectif : signer le meilleur deal en respectant vos contraintes</div>
           <div class="space-y-2">
-            <div class="sj-point"><span class="emo">🎭</span><p>Incarnez votre entreprise et ses attentes</p></div>
-            <div class="sj-point"><span class="emo">⚖️</span><p>Comparez les offres des 8 agences</p></div>
-            <div class="sj-point"><span class="emo">✍️</span><p>Signez un seul devis, le meilleur pour vous</p></div>
+            <div class="sj-point"><span class="emo">1</span><p>Incarnez votre entreprise et ses attentes</p></div>
+            <div class="sj-point"><span class="emo">2</span><p>Comparez les offres des 8 agences</p></div>
+            <div class="sj-point"><span class="emo">3</span><p>Signez un seul devis, le meilleur pour vous</p></div>
           </div>
         </div>
       </div>
@@ -759,7 +767,7 @@ main{
           <p class="opacity-80">Un seul devis par acheteur</p>
         </div>
       </div>
-      <p class="sj-in sj-d5 mt-8 text-lg font-semibold opacity-90">🔮 À la fin : le diaporama compare chaque devis signé à la combinaison parfaite.</p>
+      <p class="sj-in sj-d5 mt-8 text-lg font-semibold opacity-90">À la fin : le diaporama compare chaque devis signé à la combinaison parfaite.</p>
     </div>
   </div>
 
@@ -775,9 +783,9 @@ main{
           <div id="timerPrep" class="timer-circle"><div id="timerPrepText" class="timer-text">20:00</div></div>
         </div>
         <div class="flex justify-center gap-3 flex-wrap">
-          <button onclick="startTimer('prep','timerPrep','timerPrepText')" class="sj-btn sj-btn-blue">▶️ Démarrer</button>
-          <button onclick="pauseTimer('prep')" class="sj-btn sj-btn-amber">⏸️ Pause</button>
-          <button onclick="resetTimer('prep','timerPrep','timerPrepText')" class="sj-btn sj-btn-soft">🔄 Reset</button>
+          <button onclick="startTimer('prep','timerPrep','timerPrepText')" class="sj-btn sj-btn-blue">Démarrer</button>
+          <button onclick="pauseTimer('prep')" class="sj-btn sj-btn-amber">Pause</button>
+          <button onclick="resetTimer('prep','timerPrep','timerPrepText')" class="sj-btn sj-btn-soft">Reset</button>
         </div>
         <div class="grid sm:grid-cols-2 gap-3 mt-6 text-left text-sm">
           <div class="recap-box"><b>Acheteurs</b> : vos contraintes, votre besoin, ce qui vous inquiète.</div>
@@ -796,15 +804,15 @@ main{
       <h2 class="sj-h2 mb-6">Découvrir, proposer, négocier — 7 minutes</h2>
       <div class="timer-shell">
         <div class="mb-4">
-          <span class="rot-pill">🔁 Rotation <span id="rotNum">1</span> / 8</span>
+          <span class="rot-pill">Rotation <span id="rotNum">1</span> / 8</span>
           <div class="rot-steps" id="rotSteps"></div>
         </div>
         <div class="flex justify-center mb-6">
           <div id="timerRot" class="timer-circle"><div id="timerRotText" class="timer-text">7:00</div></div>
         </div>
         <div class="flex justify-center gap-3 flex-wrap">
-          <button onclick="startTimer('rot','timerRot','timerRotText')" class="sj-btn sj-btn-blue">▶️ Démarrer</button>
-          <button onclick="pauseTimer('rot')" class="sj-btn sj-btn-amber">⏸️ Pause</button>
+          <button onclick="startTimer('rot','timerRot','timerRotText')" class="sj-btn sj-btn-blue">Démarrer</button>
+          <button onclick="pauseTimer('rot')" class="sj-btn sj-btn-amber">Pause</button>
           <button onclick="nextRotation()" id="nextRotBtn" class="sj-btn sj-btn-soft">Rotation suivante →</button>
         </div>
         <p class="mt-5 text-sm font-semibold text-slate-600">À chaque fin de rotation, le vendeur remet son devis et les agences changent de table.</p>
@@ -824,9 +832,9 @@ main{
           <div id="timerSign" class="timer-circle"><div id="timerSignText" class="timer-text">10:00</div></div>
         </div>
         <div class="flex justify-center gap-3 flex-wrap">
-          <button onclick="startTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-blue">▶️ Démarrer</button>
-          <button onclick="pauseTimer('sign')" class="sj-btn sj-btn-amber">⏸️ Pause</button>
-          <button onclick="resetTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-soft">🔄 Reset</button>
+          <button onclick="startTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-blue">Démarrer</button>
+          <button onclick="pauseTimer('sign')" class="sj-btn sj-btn-amber">Pause</button>
+          <button onclick="resetTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-soft">Reset</button>
         </div>
         <p class="mt-5 text-sm font-semibold text-slate-600">Relisez vos contraintes : un devis hors budget ou qui oublie un impératif ne vaut rien.</p>
       </div>
@@ -841,9 +849,9 @@ main{
     <div class="sj-blob b3"></div>
     <div class="relative z-10 max-w-3xl mx-auto px-6">
       <div class="sj-in sj-d1 mb-4"><span class="sj-badge">Moment de vérité</span></div>
-      <div class="sj-counter sj-in sj-d2 mb-4">✍️</div>
+      <div class="sj-counter sj-in sj-d2 mb-4 sj-logorow"><img src="img/altitude.png" alt=""><img src="img/serenite.png" alt=""><img src="img/racines.png" alt=""><img src="img/neo.png" alt=""><img src="img/palette.png" alt=""><img src="img/capleaders.png" alt=""><img src="img/prestige.png" alt=""><img src="img/terres.png" alt=""></div>
       <h2 class="sj-h2 sj-in sj-d3 mb-4">Les devis sont signés…</h2>
-      <p class="sj-in sj-d4 text-xl font-semibold opacity-90 mb-10">Qui a trouvé le deal parfait ? Qui a protégé sa marge ? 💶</p>
+      <p class="sj-in sj-d4 text-xl font-semibold opacity-90 mb-10">Qui a trouvé le deal parfait ? Qui a protégé sa marge ?</p>
       <div class="sj-in sj-d5"><button onclick="changeSlide(1)" class="sj-cta">Saisir les devis <span class="arrow">→</span></button></div>
     </div>
   </div>
@@ -860,8 +868,8 @@ main{
       <div id="buyerTabs" class="buyer-tabs mb-5"></div>
       <div id="entryCard" class="entry-card"></div>
       <div class="flex justify-center gap-3 mt-5 flex-wrap">
-        <button onclick="resetEntries()" class="sj-btn sj-btn-sm sj-btn-ghost">🧹 Tout effacer</button>
-        <button onclick="changeSlide(1)" class="sj-btn sj-btn-white">Révéler les résultats ✨</button>
+        <button onclick="resetEntries()" class="sj-btn sj-btn-sm sj-btn-ghost">Tout effacer</button>
+        <button onclick="changeSlide(1)" class="sj-btn sj-btn-white">Révéler les résultats</button>
       </div>
     </div>
   </div>
@@ -875,7 +883,7 @@ main{
         <h2 class="sj-h2 mb-2">Le deal était-il parfait ?</h2>
         <p class="opacity-85 font-semibold mb-4">Appuie sur une carte pour découvrir le score de l'acheteur</p>
         <div class="flex justify-center gap-3 flex-wrap">
-          <button onclick="revealAllBuyers()" class="sj-btn sj-btn-sm sj-btn-white">Tout révéler ✨</button>
+          <button onclick="revealAllBuyers()" class="sj-btn sj-btn-sm sj-btn-white">Tout révéler</button>
           <button onclick="hideAllBuyers()" class="sj-btn sj-btn-sm sj-btn-ghost">↺ Retourner les cartes</button>
         </div>
       </div>
@@ -903,7 +911,7 @@ main{
     <div class="relative z-10 max-w-6xl mx-auto px-4 md:px-6 w-full py-6">
       <div class="text-center mb-6">
         <div class="mb-2"><span class="sj-badge">Résultats</span></div>
-        <h2 class="sj-h2">🏆 Les classements</h2>
+        <h2 class="sj-h2">Les classements</h2>
       </div>
       <div class="grid lg:grid-cols-2 gap-6">
         <div class="sj-panel">
@@ -970,7 +978,7 @@ main{
  **************************************************************/
 const AGENCIES = {
   altitude: {
-    name: "Altitude Équipe", theme: "Sport & aventure", emo: "🏔️", acc: "#3FA9FF", objective: 4700,
+    name: "Altitude Équipe", theme: "Sport & aventure", emo: '<img class="lg" src="img/altitude.png" alt="">', acc: "#3FA9FF", objective: 4700,
     formules: {
       defi:       { name: "Journée Défi",          price: 105, marge: 30 },
       cohesion:   { name: "Séminaire Cohésion",    price: 320, marge: 80 },
@@ -986,7 +994,7 @@ const AGENCIES = {
     }
   },
   serenite: {
-    name: "Maison Sérénité", theme: "Bien-être", emo: "🧘", acc: "#5CFFB0", objective: 5400,
+    name: "Maison Sérénité", theme: "Bien-être", emo: '<img class="lg" src="img/serenite.png" alt="">', acc: "#5CFFB0", objective: 5400,
     formules: {
       respiration: { name: "Journée Respiration",    price: 130, marge: 35 },
       retraite:    { name: "Retraite Ressourcement", price: 520, marge: 130 },
@@ -1003,7 +1011,7 @@ const AGENCIES = {
     }
   },
   racines: {
-    name: "Racines Séminaires", theme: "Nature & RSE", emo: "🌳", acc: "#10B981", objective: 3500,
+    name: "Racines Séminaires", theme: "Nature & RSE", emo: '<img class="lg" src="img/racines.png" alt="">', acc: "#10B981", objective: 3500,
     formules: {
       journee: { name: "Journée Nature Engagée",   price: 95,  marge: 25 },
       eco:     { name: "Séminaire Écoresponsable", price: 290, marge: 70 },
@@ -1019,7 +1027,7 @@ const AGENCIES = {
     }
   },
   neo: {
-    name: "Néo Expériences", theme: "Immersif & tech", emo: "🥽", acc: "#A78BFA", objective: 3700,
+    name: "Néo Expériences", theme: "Immersif & tech", emo: '<img class="lg" src="img/neo.png" alt="">', acc: "#A78BFA", objective: 3700,
     formules: {
       escape:    { name: "Escape Lab",           price: 95,  marge: 30 },
       journee:   { name: "Journée Immersive",    price: 190, marge: 50 },
@@ -1035,7 +1043,7 @@ const AGENCIES = {
     }
   },
   palette: {
-    name: "Atelier Palette", theme: "Créatif & artistique", emo: "🎨", acc: "#FF94E8", objective: 4400,
+    name: "Atelier Palette", theme: "Créatif & artistique", emo: '<img class="lg" src="img/palette.png" alt="">', acc: "#FF94E8", objective: 4400,
     formules: {
       fresque:   { name: "Atelier Fresque",               price: 120, marge: 35 },
       creation:  { name: "Journée Création & Vernissage", price: 210, marge: 55 },
@@ -1051,7 +1059,7 @@ const AGENCIES = {
     }
   },
   cap: {
-    name: "Cap Leaders", theme: "Leadership & managers", emo: "🧭", acc: "#FFAD5C", objective: 5700,
+    name: "Cap Leaders", theme: "Leadership & managers", emo: '<img class="lg" src="img/capleaders.png" alt="">', acc: "#FFAD5C", objective: 5700,
     formules: {
       matinee:  { name: "Matinée Inspiration",        price: 110, marge: 30 },
       codir:    { name: "Journée Codir",              price: 230, marge: 70 },
@@ -1067,7 +1075,7 @@ const AGENCIES = {
     }
   },
   prestige: {
-    name: "Maison Prestige", theme: "Premium", emo: "🏰", acc: "#FFC94D", objective: 7200,
+    name: "Maison Prestige", theme: "Premium", emo: '<img class="lg" src="img/prestige.png" alt="">', acc: "#FFC94D", objective: 7200,
     formules: {
       journee: { name: "Journée d'Exception", price: 280,  marge: 80 },
       sejour:  { name: "Séjour d'Exception",  price: 650,  marge: 170 },
@@ -1083,7 +1091,7 @@ const AGENCIES = {
     }
   },
   terres: {
-    name: "Terres & Tables", theme: "Gastronomie & terroir", emo: "🧺", acc: "#FF7575", objective: 3600,
+    name: "Terres & Tables", theme: "Gastronomie & terroir", emo: '<img class="lg" src="img/terres.png" alt="">', acc: "#FF7575", objective: 3600,
     formules: {
       tablee:     { name: "Journée Tablée",              price: 85,  marge: 22 },
       guinguette: { name: "Journée & Soirée Guinguette", price: 140, marge: 35 },
@@ -1106,7 +1114,7 @@ const AGENCIES = {
  *              l'option inquiétude (15) et l'option besoin (10) qui rapportent */
 const BUYERS = [
   {
-    id: "altheris", name: "Laboratoires Altheris", emo: "🧪", n: 40, budget: 14000, seuil: 13700,
+    id: "altheris", name: "Laboratoires Altheris", emo: "A", n: 40, budget: 14000, seuil: 13700,
     perfect: "altitude",
     points: {
       altitude: { status: "parfaite",   formule: "cohesion", inq: "repli",     besoin: "debrief" },
@@ -1119,7 +1127,7 @@ const BUYERS = [
     }
   },
   {
-    id: "payflow", name: "Payflow", emo: "💳", n: 25, budget: 5400, seuil: 5292,
+    id: "payflow", name: "Payflow", emo: "P", n: 25, budget: 5400, seuil: 5292,
     perfect: "neo",
     points: {
       neo:      { status: "parfaite",   formule: "journee",  inq: "report", besoin: "integration" },
@@ -1132,7 +1140,7 @@ const BUYERS = [
     }
   },
   {
-    id: "lefort", name: "Lefort & Associés", emo: "⚖️", n: 15, budget: 10200, seuil: 9996,
+    id: "lefort", name: "Lefort & Associés", emo: "L", n: 15, budget: 10200, seuil: 9996,
     perfect: "serenite",
     points: {
       serenite: { status: "parfaite",   formule: "retraite", inq: "facilitateur", besoin: "soins" },
@@ -1145,7 +1153,7 @@ const BUYERS = [
     }
   },
   {
-    id: "batiprim", name: "Batiprim", emo: "🏗️", n: 60, budget: 6500, seuil: 6370,
+    id: "batiprim", name: "Batiprim", emo: "B", n: 60, budget: 6500, seuil: 6370,
     perfect: "terres",
     points: {
       terres:   { status: "parfaite",   formule: "tablee", inq: "autocar", besoin: "trophees" },
@@ -1158,7 +1166,7 @@ const BUYERS = [
     }
   },
   {
-    id: "lumea", name: "Lumea", emo: "🌸", n: 12, budget: 8600, seuil: 8428,
+    id: "lumea", name: "Lumea", emo: "L", n: 12, budget: 8600, seuil: 8428,
     perfect: "palette",
     points: {
       palette:  { status: "parfaite",   formule: "residence", inq: "secret", besoin: "ideation" },
@@ -1171,7 +1179,7 @@ const BUYERS = [
     }
   },
   {
-    id: "solimut", name: "Solimut", emo: "🤝", n: 50, budget: 6400, seuil: 6272,
+    id: "solimut", name: "Solimut", emo: "S", n: 50, budget: 6400, seuil: 6272,
     perfect: "racines",
     points: {
       racines: { status: "parfaite",   formule: "journee", inq: "solidaire", besoin: "fresque" },
@@ -1184,7 +1192,7 @@ const BUYERS = [
     }
   },
   {
-    id: "datavia", name: "Datavia", emo: "📊", n: 20, budget: 14700, seuil: 14406,
+    id: "datavia", name: "Datavia", emo: "D", n: 20, budget: 14700, seuil: 14406,
     perfect: "cap",
     points: {
       cap:     { status: "parfaite",   formule: "parcours",  inq: "comediens", besoin: "coaching" },
@@ -1197,7 +1205,7 @@ const BUYERS = [
     }
   },
   {
-    id: "axelis", name: "Axelis Assurances", emo: "🛡️", n: 30, budget: 21600, seuil: 21168,
+    id: "axelis", name: "Axelis Assurances", emo: "A", n: 30, budget: 21600, seuil: 21168,
     perfect: "prestige",
     points: {
       prestige: { status: "parfaite",   formule: "sejour",   inq: "gala",     besoin: "accueil" },
@@ -1377,11 +1385,10 @@ if (typeof document !== "undefined") {
   function buildFloaters() {
     const spots = ["top:12%; left:8%", "top:20%; right:10%", "bottom:16%; left:12%", "bottom:12%; right:14%",
                    "top:48%; left:3%", "top:52%; right:4%", "top:6%; left:42%", "bottom:4%; left:46%"];
-    const items = ["🏔️", "💶", "🏰", "🎨", "✍️", "🧺", "🤝", "🥽"];
+    const items = ["altitude", "serenite", "prestige", "palette", "racines", "terres", "capleaders", "neo"];
     document.getElementById("heroFloaters").innerHTML = items.map((it, i) => {
       const delay = `animation-delay:${-i * 0.8}s, ${0.1 + i * 0.1}s`;
-      const coin = it === "💶" || it === "✍️" || it === "🤝" ? " coin" : "";
-      return `<div class="sj-floater${coin}" style="${spots[i]}; ${delay}">${it}</div>`;
+      return `<div class="sj-floater" style="${spots[i]}; ${delay}"><img src="img/${it}.png" alt=""></div>`;
     }).join("");
   }
 
@@ -1461,7 +1468,7 @@ if (typeof document !== "undefined") {
   function renderTabs() {
     document.getElementById("buyerTabs").innerHTML = BUYERS.map((b, i) =>
       `<button class="buyer-tab ${i === currentBuyer ? "on" : ""} ${isFilled(b.id) ? "filled" : ""}" onclick="selectBuyer(${i})">
-        <span class="ok">${isFilled(b.id) ? "✓" : i + 1}</span>${b.emo} ${b.name}</button>`).join("");
+        <span class="ok">${isFilled(b.id) ? "✓" : i + 1}</span>${b.name}</button>`).join("");
   }
   window.selectBuyer = i => { currentBuyer = i; renderEntry(); };
 
@@ -1490,7 +1497,7 @@ if (typeof document !== "undefined") {
             <span class="emo">${a.emo}</span><span>${a.name}<span class="sub">${a.theme}</span></span>
           </button>`).join("")}
         <button class="choice none ${d.none ? "on" : ""}" onclick="setNone()">
-          <span class="emo">🚫</span><span>Aucun devis signé</span>
+          <span class="emo">✕</span><span>Aucun devis signé</span>
         </button>
       </div>`;
 
@@ -1530,7 +1537,7 @@ if (typeof document !== "undefined") {
         <button class="sj-btn sj-btn-soft" ${currentBuyer === 0 ? "disabled" : ""} onclick="selectBuyer(${currentBuyer - 1})">← Acheteur précédent</button>
         ${currentBuyer < BUYERS.length - 1
           ? `<button class="sj-btn sj-btn-blue" onclick="selectBuyer(${currentBuyer + 1})">Acheteur suivant →</button>`
-          : `<button class="sj-btn sj-btn-blue" onclick="changeSlide(1)">Révéler les résultats ✨</button>`}
+          : `<button class="sj-btn sj-btn-blue" onclick="changeSlide(1)">Révéler les résultats</button>`}
       </div>`;
 
     document.getElementById("entryCard").innerHTML = html;
@@ -1554,7 +1561,7 @@ if (typeof document !== "undefined") {
         </div>
         <div class="text-right text-sm font-semibold text-slate-600">Budget de l'acheteur<br><b class="text-[#061A5C]">${euro(b.budget)}</b></div>
       </div>
-      ${raw > RULES.maxRemise ? `<p class="warn mt-2">⚠️ Remise plafonnée à 10 % dans le calcul.</p>` : ""}`;
+      ${raw > RULES.maxRemise ? `<p class="warn mt-2">Attention : remise plafonnée à 10 % dans le calcul.</p>` : ""}`;
   }
 
   window.setAgency = function (id) {
@@ -1584,9 +1591,9 @@ if (typeof document !== "undefined") {
   /* ===== Révélation acheteurs ===== */
   function verdict(res) {
     if (!res.signed) return { txt: "Pas de devis", cls: "tag-nul", color: "#6B7280", soft: "#F3F4F6" };
-    if (res.nul) return { txt: "Devis nul ❌", cls: "tag-nul", color: "#DC2626", soft: "#FEE2E2" };
-    if (res.perfect) return { txt: "Deal parfait ✨", cls: "tag-perfect", color: "#D97706", soft: "#FEF3C7" };
-    if (res.buyerScore >= 60) return { txt: "Bon deal 👍", cls: "tag-good", color: "#059669", soft: "#D1FAE5" };
+    if (res.nul) return { txt: "Devis nul", cls: "tag-nul", color: "#DC2626", soft: "#FEE2E2" };
+    if (res.perfect) return { txt: "Deal parfait", cls: "tag-perfect", color: "#D97706", soft: "#FEF3C7" };
+    if (res.buyerScore >= 60) return { txt: "Bon deal", cls: "tag-good", color: "#059669", soft: "#D1FAE5" };
     return { txt: "Deal à revoir", cls: "tag-mid", color: "#4F46E5", soft: "#E0E7FF" };
   }
 
@@ -1605,7 +1612,7 @@ if (typeof document !== "undefined") {
           </div>
           <div class="co-face co-front buyer-front" style="--res:${v.color}; --res-soft:${v.soft}">
             <div class="flex items-start justify-between gap-2 mb-1">
-              <div class="font-black text-[#061A5C] leading-tight min-w-0">${buyer.emo} ${buyer.name}</div>
+              <div class="font-black text-[#061A5C] leading-tight min-w-0">${buyer.name}</div>
               <div class="co-perf">${res.buyerScore}</div>
             </div>
             <div class="mb-2"><span class="co-tag">${v.txt}</span></div>
@@ -1632,7 +1639,7 @@ if (typeof document !== "undefined") {
     }).join("");
     const pm = b.points[b.perfect];
     const pp = priceDeal(b, { agency: b.perfect, formule: pm.formule, options: [pm.inq, pm.besoin], remise: 0 });
-    document.getElementById("modalTitle").textContent = `${b.emo} ${b.name} — le deal parfait`;
+    document.getElementById("modalTitle").textContent = `${b.name} — le deal parfait`;
     document.getElementById("modalBody").innerHTML = `
       <p class="mb-4 text-slate-700">Combinaison parfaite : <b>${pp ? euro(pp.final) : ""} HT</b> avant remise, pour un budget de <b>${euro(b.budget)}</b>.
       Il fallait négocier une remise pour la rendre signable.</p>
@@ -1713,11 +1720,11 @@ if (typeof document !== "undefined") {
     const perfect = buyers.filter(x => x.res.perfect);
     const gg = buyers.filter(x => x.res.bonus);
     document.getElementById("perfectDeals").innerHTML = `
-      <h3 class="text-2xl font-black mb-3">✨ Deals parfaits : ${perfect.length} / ${BUYERS.length}</h3>
+      <h3 class="text-2xl font-black mb-3">Deals parfaits : ${perfect.length} / ${BUYERS.length}</h3>
       <div class="flex flex-wrap justify-center gap-2 mb-3">${perfect.length ? perfect.map(x =>
-        `<span class="sj-badge">${x.buyer.emo} ${x.buyer.name} × ${AGENCIES[x.deal.agency].emo} ${AGENCIES[x.deal.agency].name}</span>`).join("") :
+        `<span class="sj-badge">${x.buyer.name} × ${AGENCIES[x.deal.agency].emo} ${AGENCIES[x.deal.agency].name}</span>`).join("") :
         `<span class="opacity-85 font-semibold">Aucun deal parfait cette fois… la découverte était-elle assez poussée ?</span>`}</div>
-      <p class="font-semibold opacity-90">🤝 Deals gagnant-gagnant : ${gg.length}</p>`;
+      <p class="font-semibold opacity-90">Deals gagnant-gagnant : ${gg.length}</p>`;
     if (buyers.some(x => x.res.signed)) launchConfetti();
   }
 
