@@ -840,7 +840,7 @@ main{
           <button onclick="pauseTimer('sign')" class="sj-btn sj-btn-amber">Pause</button>
           <button onclick="resetTimer('sign','timerSign','timerSignText')" class="sj-btn sj-btn-soft">Reset</button>
         </div>
-        <p class="mt-5 text-sm font-semibold text-slate-600">Relisez vos contraintes : un devis hors budget ou qui oublie un impératif ne vaut rien.</p>
+        <p class="mt-5 text-sm font-semibold text-slate-600">Relisez vos conditions : un devis hors budget, ou qui en oublie une, coûte 80 points.</p>
       </div>
     </div>
   </div>
@@ -992,7 +992,7 @@ const AGENCIES = {
     },
     options: {
       repli:     { name: "Repli intérieur garanti",           price: 18,   marge: 8,   pp: true },
-      assurance: { name: "Assurance annulation participants", price: 12,   marge: 7,   pp: true },
+      assurance: { name: "Assurance annulation", price: 12,   marge: 7,   pp: true },
       debrief:   { name: "Débriefing cohésion",               price: 900,  marge: 400 },
       soiree:    { name: "Soirée animée",                     price: 35,   marge: 15,  pp: true },
       autocar:   { name: "Autocar depuis Paris",              price: 28,   marge: 6,   pp: true },
@@ -1114,122 +1114,30 @@ const AGENCIES = {
   }
 };
 
-/* Pour chaque acheteur :
- * - signable : formules qui respectent ses impératifs, agence par agence (budget vérifié à part)
- * - points   : agence parfaite (40) et acceptables (20), avec la formule (20),
- *              l'option inquiétude (15) et l'option besoin (10) qui rapportent */
+/* Grille de correction (voir le doc « Le Deal Parfait — Grille de correction »)
+ * agences  : note de l'agence (parfaite 30, adaptée 15, autre 0)
+ * formules : formules qui respectent toutes les conditions, et leur note (idéale 30, bonne 20, correcte 10, conforme 5)
+ * ratees   : formules qui ratent une condition de la fiche, avec la raison (−80)
+ * options  : options qui rapportent (+15 inquiétude, +10 besoin, +5 utile) ou coûtent (−5) ; absente = 0
+ * Budget dépassé : −80. Score de l'acheteur entre 0 et 100, puis bonus gagnant-gagnant. */
 const BUYERS = [
-  {
-    id: "altheris", name: "Laboratoires Altheris", emo: "A", n: 40, budget: 14000, seuil: 13700,
-    perfect: "altitude",
-    points: {
-      altitude: { status: "parfaite",   formule: "cohesion", inq: "repli",     besoin: "debrief" },
-      serenite: { status: "acceptable", formule: null,       inq: "interieur", besoin: null },
-      racines:  { status: "acceptable", formule: "eco",      inq: "grange",    besoin: null }
-    },
-    signable: {
-      altitude: ["defi", "cohesion"], serenite: ["respiration", "retraite"], racines: ["journee", "eco"],
-      neo: ["journee", "signature"], palette: ["creation"], cap: [], prestige: ["journee", "sejour"], terres: ["sejour"]
-    }
-  },
-  {
-    id: "payflow", name: "Payflow", emo: "P", n: 25, budget: 5400, seuil: 5292,
-    perfect: "neo",
-    points: {
-      neo:      { status: "parfaite",   formule: "journee",  inq: "report", besoin: "integration" },
-      palette:  { status: "acceptable", formule: "creation", inq: null,     besoin: null },
-      altitude: { status: "acceptable", formule: "defi",     inq: null,     besoin: "debrief" }
-    },
-    signable: {
-      altitude: ["defi"], serenite: ["respiration"], racines: [], neo: ["journee"], palette: ["creation"],
-      cap: ["codir", "matinee"], prestige: ["journee"], terres: ["tablee", "guinguette"]
-    }
-  },
-  {
-    id: "lefort", name: "Lefort & Associés", emo: "L", n: 15, budget: 10200, seuil: 9996,
-    perfect: "serenite",
-    points: {
-      serenite: { status: "parfaite",   formule: "retraite", inq: "facilitateur", besoin: "soins" },
-      prestige: { status: "acceptable", formule: "sejour",   inq: null,           besoin: "spa" },
-      cap:      { status: "acceptable", formule: "parcours", inq: "facilitation", besoin: null }
-    },
-    signable: {
-      altitude: [], serenite: ["retraite"], racines: [], neo: ["signature"], palette: ["residence"],
-      cap: ["parcours"], prestige: ["sejour"], terres: ["sejour"]
-    }
-  },
-  {
-    id: "batiprim", name: "Batiprim", emo: "B", n: 60, budget: 6500, seuil: 6370,
-    perfect: "terres",
-    points: {
-      terres:   { status: "parfaite",   formule: "tablee", inq: "autocar", besoin: "trophees" },
-      altitude: { status: "acceptable", formule: "defi",   inq: null,      besoin: null },
-      neo:      { status: "acceptable", formule: "escape", inq: null,      besoin: null }
-    },
-    signable: {
-      altitude: ["defi"], serenite: ["respiration"], racines: [], neo: ["escape", "journee"], palette: ["fresque"],
-      cap: [], prestige: ["journee"], terres: ["tablee", "guinguette"]
-    }
-  },
-  {
-    id: "lumea", name: "Lumea", emo: "L", n: 12, budget: 8600, seuil: 8428,
-    perfect: "palette",
-    points: {
-      palette:  { status: "parfaite",   formule: "residence", inq: "secret", besoin: "ideation" },
-      racines:  { status: "acceptable", formule: "foret",     inq: null,     besoin: null },
-      prestige: { status: "acceptable", formule: "sejour",    inq: null,     besoin: null }
-    },
-    signable: {
-      altitude: [], serenite: ["retraite"], racines: ["foret"], neo: [], palette: ["residence"],
-      cap: ["parcours"], prestige: ["sejour"], terres: []
-    }
-  },
-  {
-    id: "solimut", name: "Solimut", emo: "S", n: 50, budget: 6400, seuil: 6272,
-    perfect: "racines",
-    points: {
-      racines: { status: "parfaite",   formule: "journee", inq: "solidaire", besoin: "fresque" },
-      terres:  { status: "acceptable", formule: "tablee",  inq: null,        besoin: "zerogaspi" },
-      cap:     { status: "acceptable", formule: "matinee", inq: null,        besoin: null }
-    },
-    signable: {
-      altitude: ["defi"], serenite: ["respiration"], racines: ["journee"], neo: ["journee"], palette: ["creation"],
-      cap: ["matinee"], prestige: ["journee"], terres: ["tablee", "guinguette"]
-    }
-  },
-  {
-    id: "datavia", name: "Datavia", emo: "D", n: 20, budget: 14700, seuil: 14406,
-    perfect: "cap",
-    points: {
-      cap:     { status: "parfaite",   formule: "parcours",  inq: "comediens", besoin: "coaching" },
-      palette: { status: "acceptable", formule: "residence", inq: "impro",     besoin: null },
-      neo:     { status: "acceptable", formule: "signature", inq: null,        besoin: null }
-    },
-    signable: {
-      altitude: ["cohesion"], serenite: ["retraite"], racines: [], neo: ["signature"], palette: ["residence"],
-      cap: ["parcours"], prestige: ["sejour"], terres: ["sejour"]
-    }
-  },
-  {
-    id: "axelis", name: "Axelis Assurances", emo: "A", n: 30, budget: 21600, seuil: 21168,
-    perfect: "prestige",
-    points: {
-      prestige: { status: "parfaite",   formule: "sejour",   inq: "gala",     besoin: "accueil" },
-      terres:   { status: "acceptable", formule: "sejour",   inq: "trophees", besoin: null },
-      serenite: { status: "acceptable", formule: "retraite", inq: null,       besoin: "attention" }
-    },
-    signable: {
-      altitude: ["cohesion"], serenite: ["retraite"], racines: ["eco"], neo: ["signature"], palette: [],
-      cap: [], prestige: ["sejour"], terres: ["sejour"]
-    }
-  }
+  {"id": "altheris", "name": "Laboratoires Altheris", "emo": "A", "n": 40, "budget": 14000, "perfect": {"agency": "altitude", "formule": "cohesion", "inq": "repli", "besoin": "debrief"}, "agences": {"altitude": {"pts": 30, "lvl": "parfaite"}, "serenite": {"pts": 0, "lvl": "autre"}, "racines": {"pts": 15, "lvl": "adaptée"}, "neo": {"pts": 0, "lvl": "autre"}, "palette": {"pts": 0, "lvl": "autre"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 0, "lvl": "autre"}, "terres": {"pts": 15, "lvl": "adaptée"}}, "formules": {"altitude.defi": {"pts": 10, "why": "Conforme ; course d'orientation sportive, pas de vraie coopération R&D/Qualité."}, "altitude.cohesion": {"pts": 30, "why": "Raid en équipes avec rôles non sportifs, 2 jours, dîner au domaine."}, "serenite.respiration": {"pts": 5, "why": "Sophrologie et marche : rien de collectif."}, "serenite.retraite": {"pts": 5, "why": "Conforme mais hors budget (20 800 €)."}, "racines.journee": {"pts": 10, "why": "Randonnée et atelier nature collectifs, accessibles aux non-sportifs."}, "racines.eco": {"pts": 20, "why": "2 jours, activités collectives, repli possible : coopérer et prendre le temps."}, "neo.journee": {"pts": 20, "why": "Mission par équipes de 3 h, en intérieur : aucun risque météo, personne sur le bord."}, "neo.signature": {"pts": 10, "why": "Conforme mais hors budget (22 400 €)."}, "palette.creation": {"pts": 10, "why": "Atelier en équipes, en intérieur."}, "prestige.journee": {"pts": 5, "why": "Golf ou calèche : rien de collectif, cadre prestigieux."}, "prestige.sejour": {"pts": 5, "why": "Conforme mais hors budget (26 000 €)."}, "terres.sejour": {"pts": 20, "why": "Atelier cuisine en équipes, tablées conviviales, salle une demi-journée."}}, "ratees": {"altitude.expedition": "3 jours, et 15 à 30 personnes", "serenite.evasion": "3 jours", "racines.foret": "10 à 24 personnes", "neo.escape": "Demi-journée, sans salle", "palette.fresque": "Pas de salle", "palette.residence": "8 à 20 personnes", "cap.matinee": "Demi-journée", "cap.codir": "6 à 30 personnes", "cap.parcours": "10 à 24 personnes", "prestige.voyage": "3 jours, en avion", "terres.tablee": "Salle 2 h seulement, pas une demi-journée", "terres.guinguette": "Salle 2 h seulement, pas une demi-journée"}, "options": {"altitude.repli": {"pts": 15, "why": "Inquiétude : repli décidé la veille, sans surcoût."}, "altitude.debrief": {"pts": 10, "why": "Besoin : un temps pour parler de la coopération."}, "altitude.soiree": {"pts": -5, "why": "Contredit « pour le soir, un dîner convivial suffit »."}, "serenite.interieur": {"pts": 15, "why": "Inquiétude : tout en intérieur, quelle que soit la météo."}, "serenite.facilitateur": {"pts": 5, "why": "Aide à prendre le temps d'en parler."}, "racines.grange": {"pts": 15, "why": "Inquiétude : repli en intérieur prêt en cas de pluie."}, "racines.solidaire": {"pts": 10, "why": "Besoin : réussir un chantier ensemble."}, "racines.diner": {"pts": -5, "why": "Contredit « un dîner convivial suffit »."}, "neo.report": {"pts": 5, "why": "Rassure sur ce qui est facturé si la date bouge."}, "neo.cocktail": {"pts": -5, "why": "Champagne à volonté : contredit le profil (méfiance du prestige)."}, "palette.impro": {"pts": 5, "why": "Écoute et réaction : utile à deux équipes en tension."}, "palette.oeuvre": {"pts": 5, "why": "Trace concrète d'une réussite commune."}, "palette.secret": {"pts": -5, "why": "Activités surprises : contredit « organisation sans surprise »."}, "prestige.champagne": {"pts": -5, "why": "Contredit le profil (méfiance du prestige)."}, "prestige.helico": {"pts": -5, "why": "Contredit le profil (méfiance du prestige)."}, "prestige.vip": {"pts": -5, "why": "Contredit le profil (méfiance du prestige)."}, "prestige.gala": {"pts": -5, "why": "Contredit « un dîner convivial suffit »."}, "terres.chef": {"pts": -5, "why": "Contredit « un dîner convivial suffit »."}}},
+  {"id": "payflow", "name": "Payflow", "emo": "P", "n": 25, "budget": 5400, "perfect": {"agency": "neo", "formule": "journee", "inq": "report", "besoin": "integration"}, "agences": {"altitude": {"pts": 0, "lvl": "autre"}, "serenite": {"pts": 0, "lvl": "autre"}, "racines": {"pts": 0, "lvl": "autre"}, "neo": {"pts": 30, "lvl": "parfaite"}, "palette": {"pts": 15, "lvl": "adaptée"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 0, "lvl": "autre"}, "terres": {"pts": 0, "lvl": "autre"}}, "formules": {"neo.journee": {"pts": 30, "why": "Salle, mission par équipes moderne, soirée cocktail au hangar."}, "palette.creation": {"pts": 20, "why": "Salle, atelier en équipes, soirée vernissage festive ; moins « moderne »."}}, "ratees": {"altitude.defi": "Pas de soirée, et 1 h de trajet tout juste", "altitude.cohesion": "Une nuit sur place", "altitude.expedition": "Deux nuits sur place", "serenite.respiration": "Pas de soirée", "serenite.retraite": "Une nuit sur place", "serenite.evasion": "Deux nuits sur place", "racines.journee": "1 h 20 de trajet, pas de soirée", "racines.eco": "1 h 20 de trajet, une nuit", "racines.foret": "1 h 20 de trajet, une nuit", "neo.escape": "Demi-journée, sans salle", "neo.signature": "Une nuit à l'hôtel", "palette.fresque": "Pas de salle, pas de soirée", "palette.residence": "Une nuit, à Barbizon", "cap.matinee": "Demi-journée, pas de soirée", "cap.codir": "Pas de soirée", "cap.parcours": "Une nuit sur place", "prestige.journee": "Pas de soirée, trajet supérieur à 1 h, hors budget", "prestige.sejour": "Une nuit sur place", "prestige.voyage": "Deux nuits, en avion", "terres.tablee": "1 h 15 de trajet, pas de soirée", "terres.guinguette": "1 h 15 de trajet", "terres.sejour": "Une nuit sur place"}, "options": {"neo.report": {"pts": 15, "why": "Inquiétude : changement de date gratuit."}, "neo.integration": {"pts": 10, "why": "Besoin : anciens et nouveaux mélangés, parrainage."}, "neo.cocktail": {"pts": 5, "why": "Attente : une vraie soirée pour fêter la levée de fonds."}, "palette.impro": {"pts": 5, "why": "Écoute et prise de parole : aide à souder anciens et nouveaux."}, "palette.oeuvre": {"pts": 5, "why": "Une œuvre commune pour une culture d'équipe qui se dilue."}}},
+  {"id": "lefort", "name": "Lefort & Associés", "emo": "L", "n": 15, "budget": 10200, "perfect": {"agency": "serenite", "formule": "retraite", "inq": "facilitateur", "besoin": "soins"}, "agences": {"altitude": {"pts": 0, "lvl": "autre"}, "serenite": {"pts": 30, "lvl": "parfaite"}, "racines": {"pts": 0, "lvl": "autre"}, "neo": {"pts": 0, "lvl": "autre"}, "palette": {"pts": 0, "lvl": "autre"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 15, "lvl": "adaptée"}, "terres": {"pts": 0, "lvl": "autre"}}, "formules": {"serenite.retraite": {"pts": 30, "why": "Salle les deux matinées, après-midi libres au spa : repos sans cure."}, "palette.residence": {"pts": 10, "why": "Lieu calme, salle de travail ; ateliers artistiques imposés."}, "cap.parcours": {"pts": 5, "why": "Ateliers pour nouveaux managers : hors sujet pour des associés."}, "prestige.sejour": {"pts": 20, "why": "Château, gastronomie, activités au choix (salle à ajouter au catalogue)."}}, "ratees": {"altitude.defi": "1 jour, 20 personnes minimum", "altitude.cohesion": "20 personnes minimum", "altitude.expedition": "3 jours", "serenite.respiration": "1 jour sans nuit", "serenite.evasion": "3 jours", "racines.journee": "1 jour sans nuit", "racines.eco": "Salle une demi-journée seulement", "racines.foret": "Chambres à 2 lits, yourte une demi-journée", "neo.escape": "Demi-journée", "neo.journee": "1 jour sans nuit", "neo.signature": "Salle une demi-journée seulement", "palette.fresque": "1 jour sans nuit", "palette.creation": "1 jour sans nuit", "cap.matinee": "Demi-journée", "cap.codir": "1 jour sans nuit", "prestige.journee": "1 jour sans nuit", "prestige.voyage": "3 jours, en avion", "terres.tablee": "1 jour sans nuit", "terres.guinguette": "1 jour sans nuit", "terres.sejour": "Salle une demi-journée seulement"}, "options": {"serenite.facilitateur": {"pts": 15, "why": "Inquiétude : décisions formalisées, compte rendu le soir."}, "serenite.soins": {"pts": 10, "why": "Besoin : repos, sans programme de cure."}, "serenite.attention": {"pts": 5, "why": "Qualité du service, attendue par ce profil."}, "serenite.detox": {"pts": -5, "why": "Contredit « pas une cure » et « une table de qualité »."}, "cap.facilitation": {"pts": 15, "why": "Inquiétude : un coach anime la séance et formalise les décisions."}, "prestige.spa": {"pts": 10, "why": "Besoin : repos au spa."}, "prestige.accueil": {"pts": 5, "why": "Qualité du service, attendue par ce profil."}, "prestige.vip": {"pts": 5, "why": "Les associés viennent en voiture ; un service attentionné."}, "palette.ideation": {"pts": 5, "why": "Des idées concrètes et classées : aide à rendre les séances efficaces."}, "palette.aquarelle": {"pts": 5, "why": "Activité reposante, sans esprit de cure."}}},
+  {"id": "batiprim", "name": "Batiprim", "emo": "B", "n": 60, "budget": 6500, "perfect": {"agency": "terres", "formule": "tablee", "inq": "autocar", "besoin": "trophees"}, "agences": {"altitude": {"pts": 15, "lvl": "adaptée"}, "serenite": {"pts": 0, "lvl": "autre"}, "racines": {"pts": 0, "lvl": "autre"}, "neo": {"pts": 0, "lvl": "autre"}, "palette": {"pts": 0, "lvl": "autre"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 0, "lvl": "autre"}, "terres": {"pts": 30, "lvl": "parfaite"}}, "formules": {"altitude.defi": {"pts": 20, "why": "Course en équipes mélangées, déjeuner, simple."}, "serenite.respiration": {"pts": 5, "why": "Conforme mais hors budget (7 800 €)."}, "neo.journee": {"pts": 10, "why": "Missions en équipes ; hors budget (11 400 €)."}, "palette.fresque": {"pts": 10, "why": "Fresque en équipes mélangées, déjeuner ; budget serré."}, "prestige.journee": {"pts": 5, "why": "Cadre guindé ; hors budget (16 800 €)."}, "terres.tablee": {"pts": 30, "why": "Atelier cuisine en équipes, grande tablée le midi."}, "terres.guinguette": {"pts": 20, "why": "La fête en plus ; hors budget (8 400 €)."}}, "ratees": {"altitude.cohesion": "Une nuit sur place", "altitude.expedition": "Deux nuits, 15 à 30 personnes", "serenite.retraite": "Une nuit sur place", "serenite.evasion": "Deux nuits sur place", "racines.journee": "1 h 20 de Paris (Sologne)", "racines.eco": "1 h 20 de Paris (Sologne), une nuit", "racines.foret": "1 h 20 de Paris (Sologne), une nuit", "neo.escape": "Pas de repas, cocktail seulement", "neo.signature": "Une nuit à l'hôtel", "palette.creation": "10 à 50 personnes", "palette.residence": "Une nuit, 8 à 20 personnes", "cap.matinee": "Demi-journée", "cap.codir": "6 à 30 personnes", "cap.parcours": "Une nuit, 10 à 24 personnes", "prestige.sejour": "Une nuit sur place", "prestige.voyage": "Deux nuits, en avion", "terres.sejour": "Une nuit sur place"}, "options": {"terres.autocar": {"pts": 15, "why": "Inquiétude : un autocar de 60 places depuis le dépôt."}, "terres.trophees": {"pts": 10, "why": "Besoin : mettre à l'honneur pendant le repas."}, "terres.panier": {"pts": 5, "why": "Un merci concret à chacun."}, "palette.oeuvre": {"pts": 5, "why": "Œuvre collective livrée au dépôt : trace de la réussite."}, "prestige.gala": {"pts": 5, "why": "Met à l'honneur, mais dans un cadre de gala."}}},
+  {"id": "lumea", "name": "Lumea", "emo": "L", "n": 12, "budget": 8600, "perfect": {"agency": "palette", "formule": "residence", "inq": "secret", "besoin": "ideation"}, "agences": {"altitude": {"pts": 0, "lvl": "autre"}, "serenite": {"pts": 0, "lvl": "autre"}, "racines": {"pts": 15, "lvl": "adaptée"}, "neo": {"pts": 0, "lvl": "autre"}, "palette": {"pts": 30, "lvl": "parfaite"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 15, "lvl": "adaptée"}, "terres": {"pts": 0, "lvl": "autre"}}, "formules": {"serenite.retraite": {"pts": 5, "why": "Domaine classique, rien d'inattendu."}, "racines.foret": {"pts": 20, "why": "Cabanes, feu de bois, yourte de réunion : inattendu et beau."}, "palette.residence": {"pts": 30, "why": "Maison d'artistes, salle de travail, ateliers avec deux artistes."}, "cap.parcours": {"pts": 5, "why": "Hôtel-séminaire classique."}, "prestige.sejour": {"pts": 20, "why": "Château, beau cadre (salle à ajouter au catalogue)."}}, "ratees": {"altitude.defi": "1 jour, 20 personnes minimum", "altitude.cohesion": "20 personnes minimum", "altitude.expedition": "3 jours, 15 personnes minimum", "serenite.respiration": "1 jour sans nuit", "serenite.evasion": "3 jours", "racines.journee": "1 jour sans nuit", "racines.eco": "15 personnes minimum", "neo.escape": "Demi-journée", "neo.journee": "1 jour sans nuit", "neo.signature": "15 personnes minimum", "palette.fresque": "1 jour sans nuit", "palette.creation": "1 jour sans nuit", "cap.matinee": "Demi-journée", "cap.codir": "1 jour sans nuit", "prestige.journee": "1 jour sans nuit", "prestige.voyage": "3 jours", "terres.tablee": "1 jour sans nuit", "terres.guinguette": "1 jour sans nuit", "terres.sejour": "15 personnes minimum"}, "options": {"palette.secret": {"pts": 15, "why": "Inquiétude : deux activités inédites, jamais proposées ailleurs."}, "palette.ideation": {"pts": 10, "why": "Besoin : des idées concrètes et classées."}, "palette.aquarelle": {"pts": -5, "why": "Activité classique : contredit « vraiment inédit »."}, "prestige.helico": {"pts": 5, "why": "Une expérience qu'on raconte (hors budget avec le séjour)."}, "serenite.facilitateur": {"pts": 5, "why": "Structure le travail : aide à produire des idées."}, "cap.facilitation": {"pts": 5, "why": "Structure le travail : aide à produire des idées."}}},
+  {"id": "solimut", "name": "Solimut", "emo": "S", "n": 50, "budget": 6400, "perfect": {"agency": "racines", "formule": "journee", "inq": "solidaire", "besoin": "fresque"}, "agences": {"altitude": {"pts": 0, "lvl": "autre"}, "serenite": {"pts": 0, "lvl": "autre"}, "racines": {"pts": 30, "lvl": "parfaite"}, "neo": {"pts": 0, "lvl": "autre"}, "palette": {"pts": 0, "lvl": "autre"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 0, "lvl": "autre"}, "terres": {"pts": 15, "lvl": "adaptée"}}, "formules": {"altitude.defi": {"pts": 5, "why": "Course d'orientation : rien sur la RSE."}, "serenite.respiration": {"pts": 5, "why": "Bien-être : rien sur la RSE."}, "racines.journee": {"pts": 30, "why": "Déjeuner local et de saison, randonnée et atelier nature, salle."}, "neo.journee": {"pts": 5, "why": "Conforme mais hors budget (9 500 €)."}, "palette.creation": {"pts": 5, "why": "Conforme mais hors budget (10 500 €)."}, "prestige.journee": {"pts": 5, "why": "Conforme mais hors budget (14 000 €)."}, "terres.tablee": {"pts": 20, "why": "Produits de la ferme, atelier cuisine, salle 2 h."}, "terres.guinguette": {"pts": 5, "why": "La soirée guinguette renforce l'image de « sortie » que redoute Bruno."}}, "ratees": {"altitude.cohesion": "Une nuit sur place", "altitude.expedition": "Deux nuits sur place", "serenite.retraite": "Une nuit sur place", "serenite.evasion": "Deux nuits sur place", "racines.eco": "Une nuit sur place", "racines.foret": "Une nuit, 10 à 24 personnes", "neo.escape": "Pas de salle ni de déjeuner", "neo.signature": "Une nuit à l'hôtel", "palette.fresque": "Pas de salle", "palette.residence": "Une nuit, 8 à 20 personnes", "cap.matinee": "Demi-journée, pas une journée", "cap.codir": "6 à 30 personnes", "cap.parcours": "Une nuit, 10 à 24 personnes", "prestige.sejour": "Une nuit sur place", "prestige.voyage": "Deux nuits, en avion", "terres.sejour": "Une nuit sur place"}, "options": {"racines.solidaire": {"pts": 15, "why": "Inquiétude : attestation et photos, une journée utile à montrer."}, "racines.fresque": {"pts": 10, "why": "Besoin : comprendre le dérèglement climatique et agir."}, "racines.bilan": {"pts": 5, "why": "Des chiffres pour montrer que la journée est cohérente."}, "racines.diner": {"pts": -5, "why": "Menu gastronomique et vins : contredit l'inquiétude (image)."}, "terres.zerogaspi": {"pts": 10, "why": "Besoin : agir concrètement contre le gaspillage."}, "terres.vins": {"pts": -5, "why": "Dégustation de vins : contredit l'inquiétude (image)."}, "terres.chef": {"pts": -5, "why": "Chef étoilé : contredit l'inquiétude (image)."}}},
+  {"id": "datavia", "name": "Datavia", "emo": "D", "n": 20, "budget": 14700, "perfect": {"agency": "cap", "formule": "parcours", "inq": "comediens", "besoin": "coaching"}, "agences": {"altitude": {"pts": 0, "lvl": "autre"}, "serenite": {"pts": 0, "lvl": "autre"}, "racines": {"pts": 0, "lvl": "autre"}, "neo": {"pts": 15, "lvl": "adaptée"}, "palette": {"pts": 15, "lvl": "adaptée"}, "cap": {"pts": 30, "lvl": "parfaite"}, "prestige": {"pts": 0, "lvl": "autre"}, "terres": {"pts": 0, "lvl": "autre"}}, "formules": {"altitude.cohesion": {"pts": 10, "why": "Raid en équipes avec rôles : vivant, clé en main."}, "serenite.retraite": {"pts": 5, "why": "Après-midi au spa : rien sur la posture."}, "racines.eco": {"pts": 5, "why": "Conforme grâce au passage à 1 h 30 ; rien sur la posture."}, "neo.signature": {"pts": 20, "why": "Hôtel, pension complète, journée immersive et hackathon : vivant, clé en main."}, "palette.residence": {"pts": 20, "why": "Résidence clé en main, ateliers vivants, salle de travail."}, "cap.parcours": {"pts": 30, "why": "Deux jours sur déléguer, recadrer, motiver, avec 2 coachs."}, "prestige.sejour": {"pts": 5, "why": "Château : rien sur la posture."}, "terres.sejour": {"pts": 5, "why": "Gîtes : rien sur la posture."}}, "ratees": {"altitude.defi": "1 jour sans nuit", "altitude.expedition": "3 jours", "serenite.respiration": "1 jour sans nuit", "serenite.evasion": "3 jours", "racines.journee": "1 jour sans nuit", "racines.foret": "Chambres à 2 lits", "neo.escape": "Demi-journée", "neo.journee": "1 jour sans nuit", "palette.fresque": "1 jour sans nuit", "palette.creation": "1 jour sans nuit", "cap.matinee": "Demi-journée", "cap.codir": "1 jour sans nuit", "prestige.journee": "1 jour sans nuit", "prestige.voyage": "3 jours", "terres.tablee": "1 jour sans nuit", "terres.guinguette": "1 jour sans nuit"}, "options": {"cap.comediens": {"pts": 15, "why": "Inquiétude : des cas concrets joués, on s'entraîne."}, "cap.coaching": {"pts": 10, "why": "Besoin : un suivi individuel à 30 jours."}, "cap.livret": {"pts": 5, "why": "Des engagements écrits, pour que ça dure."}, "cap.conferencier": {"pts": -5, "why": "Conférence d'1 h : le format descendant que redoutent les managers."}, "palette.impro": {"pts": 15, "why": "Inquiétude : mises en situation vivantes avec un comédien."}, "altitude.debrief": {"pts": 5, "why": "Analyser comment chacun a coopéré : utile à la posture."}}},
+  {"id": "axelis", "name": "Axelis Assurances", "emo": "A", "n": 30, "budget": 21600, "perfect": {"agency": "prestige", "formule": "sejour", "inq": "gala", "besoin": "accueil"}, "agences": {"altitude": {"pts": 0, "lvl": "autre"}, "serenite": {"pts": 15, "lvl": "adaptée"}, "racines": {"pts": 0, "lvl": "autre"}, "neo": {"pts": 0, "lvl": "autre"}, "palette": {"pts": 0, "lvl": "autre"}, "cap": {"pts": 0, "lvl": "autre"}, "prestige": {"pts": 30, "lvl": "parfaite"}, "terres": {"pts": 15, "lvl": "adaptée"}}, "formules": {"altitude.cohesion": {"pts": 5, "why": "Raid : ni haut de gamme ni reconnaissance."}, "serenite.retraite": {"pts": 10, "why": "Spa et repos en récompense ; peu de fête."}, "racines.eco": {"pts": 5, "why": "Écolodge : ni haut de gamme ni reconnaissance."}, "neo.signature": {"pts": 5, "why": "Hôtel 4 étoiles et hackathon : du travail plutôt qu'une récompense."}, "prestige.sejour": {"pts": 30, "why": "Château, pension gastronomique, dîner dans les salons."}, "terres.sejour": {"pts": 20, "why": "Tablées chaleureuses, bonne cuisine ; moins haut de gamme."}}, "ratees": {"altitude.defi": "1 jour sans nuit", "altitude.expedition": "3 jours", "serenite.respiration": "1 jour sans nuit", "serenite.evasion": "3 jours", "racines.journee": "1 jour sans nuit", "racines.foret": "Chambres à 2 lits", "neo.escape": "Demi-journée", "neo.journee": "1 jour sans nuit", "palette.fresque": "1 jour sans nuit", "palette.creation": "1 jour sans nuit", "palette.residence": "8 à 20 personnes", "cap.matinee": "Demi-journée", "cap.codir": "1 jour sans nuit", "cap.parcours": "10 à 24 personnes", "prestige.journee": "1 jour sans nuit", "prestige.voyage": "En avion (interdit), 3 jours", "terres.tablee": "1 jour sans nuit", "terres.guinguette": "1 jour sans nuit"}, "options": {"prestige.gala": {"pts": 15, "why": "Inquiétude : remise des prix mise en scène, photo de chaque lauréat."}, "prestige.accueil": {"pts": 10, "why": "Besoin : cadeau, carte signée, nom gravé pour chacun."}, "prestige.champagne": {"pts": 5, "why": "Séjour festif et haut de gamme."}, "prestige.spa": {"pts": 5, "why": "Une récompense qui fait plaisir."}, "prestige.helico": {"pts": 5, "why": "Une expérience de récompense mémorable."}, "prestige.vip": {"pts": 5, "why": "Accueil en tenue : qu'ils se sentent attendus."}, "terres.trophees": {"pts": 15, "why": "Inquiétude : trophées gravés et mise à l'honneur pendant le repas."}, "terres.panier": {"pts": 5, "why": "Un merci à chacun (pas personnalisé)."}, "terres.chef": {"pts": 5, "why": "Belle table."}, "terres.vins": {"pts": 5, "why": "Belle table."}, "serenite.attention": {"pts": 10, "why": "Besoin : cadeau et mot personnalisé dans chaque chambre."}, "serenite.soins": {"pts": 5, "why": "Une récompense bien-être."}, "serenite.detox": {"pts": -5, "why": "Sans alcool ni sucre : contredit « belle table » et l'ambiance festive."}, "neo.cocktail": {"pts": 5, "why": "Soirée festive."}, "racines.diner": {"pts": 5, "why": "Belle table."}}},
 ];
 
 const RULES = {
-  agencyPerfect: 40, agencyAcceptable: 20, formule: 20, inq: 15, besoin: 10, trap: -5,
-  priceGood: 15, priceOk: 5, maxRemise: 10, minMarginRate: 0.15,
+  priceGood: 15, priceOk: 5, priceGoodRate: 0.98, conditionPenalty: 80, maxRemise: 10, minMarginRate: 0.15, cap: 100,
   bonus: 10, bonusBuyerMin: 85, bonusMarginRate: 0.20
 };
+const OPT_LABEL = { 15: "inquiétude", 10: "besoin", 5: "utile", "-5": "contredit la fiche" };
+const FORM_LABEL = { 30: "idéale", 20: "bonne", 10: "correcte", 5: "conforme" };
+const AG_LABEL = { 30: "parfaite", 15: "adaptée", 0: "autre" };
 
 /**************************************************************
  * Calculs (fonctions pures)
@@ -1252,62 +1160,67 @@ function priceDeal(buyer, deal) {
 }
 
 function scoreDeal(buyer, deal) {
-  const res = { signed: false, nul: false, reason: "", lines: [], buyerScore: 0, marge: 0, horsRegles: false,
+  const res = { signed: false, nul: false, fails: 0, reason: "", lines: [], buyerScore: 0, marge: 0, horsRegles: false,
                 bonus: false, perfect: false, status: "aucun" };
   if (!deal || !deal.agency || !deal.formule) { res.reason = "Aucun devis signé"; return res; }
   res.signed = true;
   const p = priceDeal(buyer, deal);
   Object.assign(res, { price: p });
-  const allowed = (buyer.signable[deal.agency] || []).includes(deal.formule);
-
-  if (!allowed || p.final > buyer.budget + 0.001) {
-    res.nul = true;
-    res.reason = !allowed ? "Un impératif n'est pas respecté" : "Le prix dépasse le budget";
-    res.lines.push({ label: res.reason, pts: 0, kind: "neg" });
-    return res; // devis nul : 0 pour l'acheteur, rien pour l'agence
-  }
-
+  const key = `${deal.agency}.${deal.formule}`;
+  const f = buyer.formules[key];
   const ag = AGENCIES[deal.agency];
-  const map = buyer.points[deal.agency];
-  res.status = map ? map.status : "autre";
+  const a = buyer.agences[deal.agency] || { pts: 0, lvl: "autre" };
+  res.status = a.lvl;
   let score = 0;
 
-  const agPts = !map ? 0 : map.status === "parfaite" ? RULES.agencyPerfect : RULES.agencyAcceptable;
-  score += agPts;
-  res.lines.push({ label: `Agence ${res.status}`, pts: agPts, kind: agPts > 0 ? "pos" : "" });
+  score += a.pts;
+  res.lines.push({ label: `Agence ${a.lvl}`, pts: a.pts, kind: a.pts > 0 ? "pos" : "" });
 
-  const fPts = map && map.formule === deal.formule ? RULES.formule : 0;
-  score += fPts;
-  res.lines.push({ label: ag.formules[deal.formule].name, pts: fPts, kind: fPts > 0 ? "pos" : "" });
+  if (f) {
+    score += f.pts;
+    res.lines.push({ label: `${ag.formules[deal.formule].name} (${FORM_LABEL[f.pts]})`, pts: f.pts, kind: "pos" });
+  } else {
+    res.fails += 1;
+    score -= RULES.conditionPenalty;
+    const why = (buyer.ratees && buyer.ratees[key]) || "une condition n'est pas respectée";
+    res.lines.push({ label: `${ag.formules[deal.formule].name} : ${why}`, pts: -RULES.conditionPenalty, kind: "neg" });
+  }
 
   (deal.options || []).forEach(id => {
-    let pts = RULES.trap, label = ag.options[id].name;
-    if (map && map.inq === id) pts = RULES.inq;
-    else if (map && map.besoin === id) pts = RULES.besoin;
+    const o = buyer.options[`${deal.agency}.${id}`];
+    const pts = o ? o.pts : 0;
     score += pts;
-    res.lines.push({ label, pts, kind: pts > 0 ? "pos" : "neg" });
+    res.lines.push({ label: ag.options[id].name, pts, kind: pts > 0 ? "pos" : pts < 0 ? "neg" : "" });
   });
 
-  const prPts = p.final <= buyer.seuil + 0.001 ? RULES.priceGood : RULES.priceOk;
-  score += prPts;
-  res.lines.push({ label: `Prix ${euro(p.final)}`, pts: prPts, kind: "pos" });
+  if (p.final > buyer.budget + 0.001) {
+    res.fails += 1;
+    score -= RULES.conditionPenalty;
+    res.lines.push({ label: `Prix ${euro(p.final)} : budget dépassé`, pts: -RULES.conditionPenalty, kind: "neg" });
+  } else {
+    const prPts = p.final <= buyer.budget * RULES.priceGoodRate + 0.001 ? RULES.priceGood : RULES.priceOk;
+    score += prPts;
+    res.lines.push({ label: `Prix ${euro(p.final)}`, pts: prPts, kind: "pos" });
+  }
 
-  score = Math.max(0, score);
+  score = Math.max(0, Math.min(RULES.cap, score));
+  if (res.fails) res.reason = res.fails > 1 ? `${res.fails} conditions ratées` : "Une condition ratée";
 
+  // Le vendeur garde sa marge sur tout devis signé (sauf sous le plancher de 15 %)
   res.horsRegles = p.rate < RULES.minMarginRate;
   res.marge = res.horsRegles ? 0 : p.margeNet;
 
-  if (score >= RULES.bonusBuyerMin && !res.horsRegles && p.rate >= RULES.bonusMarginRate) {
+  if (!res.fails && score >= RULES.bonusBuyerMin && !res.horsRegles && p.rate >= RULES.bonusMarginRate) {
     res.bonus = true;
     score += RULES.bonus;
     res.lines.push({ label: "Bonus gagnant-gagnant", pts: RULES.bonus, kind: "pos" });
   }
   res.buyerScore = score;
 
-  const perfectMap = buyer.points[buyer.perfect];
+  const pf = buyer.perfect;
   const opts = deal.options || [];
-  res.perfect = deal.agency === buyer.perfect && deal.formule === perfectMap.formule &&
-                opts.includes(perfectMap.inq) && opts.includes(perfectMap.besoin);
+  res.perfect = !res.fails && deal.agency === pf.agency && deal.formule === pf.formule &&
+                opts.includes(pf.inq) && opts.includes(pf.besoin);
   return res;
 }
 
@@ -1597,7 +1510,7 @@ if (typeof document !== "undefined") {
   /* ===== Révélation acheteurs ===== */
   function verdict(res) {
     if (!res.signed) return { txt: "Pas de devis", cls: "tag-nul", color: "#6B7280", soft: "#F3F4F6" };
-    if (res.nul) return { txt: "Devis nul", cls: "tag-nul", color: "#DC2626", soft: "#FEE2E2" };
+    if (res.fails) return { txt: res.reason, cls: "tag-nul", color: "#DC2626", soft: "#FEE2E2" };
     if (res.perfect) return { txt: "Deal parfait", cls: "tag-perfect", color: "#D97706", soft: "#FEF3C7" };
     if (res.buyerScore >= 60) return { txt: "Bon deal", cls: "tag-good", color: "#059669", soft: "#D1FAE5" };
     return { txt: "Deal à revoir", cls: "tag-mid", color: "#4F46E5", soft: "#E0E7FF" };
@@ -1624,7 +1537,7 @@ if (typeof document !== "undefined") {
             <div class="mb-2"><span class="co-tag">${v.txt}</span></div>
             ${ag ? `<div class="text-xs font-semibold text-slate-500 mb-1">${ag.emo} ${ag.name} · ${euro(res.price.final)}</div>` : ""}
             <div class="flex-1">${res.lines.map(l => `<div class="break-line ${l.kind}"><span>${l.label}</span><b>${l.pts > 0 ? "+" : ""}${l.pts}</b></div>`).join("")}</div>
-            <button class="sj-btn sj-btn-sm sj-btn-soft mt-2" onclick="event.stopPropagation(); openPerfect(${i})">Voir le deal parfait</button>
+            <button class="sj-btn sj-btn-sm sj-btn-soft mt-2" onclick="event.stopPropagation(); openPerfect(${i})">Voir le corrigé</button>
           </div>
         </div>
       </div>`;
@@ -1635,24 +1548,31 @@ if (typeof document !== "undefined") {
 
   window.openPerfect = function (i) {
     const b = BUYERS[i];
-    const rows = Object.entries(b.points).map(([agId, m]) => {
-      const a = AGENCIES[agId];
-      return `<tr class="border-b border-slate-100">
-        <td class="py-2 pr-2 font-bold">${a.emo} ${a.name}<div class="text-xs font-semibold text-slate-500">${m.status}</div></td>
-        <td class="py-2 pr-2">${m.formule ? a.formules[m.formule].name : "—"}</td>
-        <td class="py-2 pr-2">${m.inq ? a.options[m.inq].name : "—"}</td>
-        <td class="py-2">${m.besoin ? a.options[m.besoin].name : "—"}</td></tr>`;
-    }).join("");
-    const pm = b.points[b.perfect];
-    const pp = priceDeal(b, { agency: b.perfect, formule: pm.formule, options: [pm.inq, pm.besoin], remise: 0 });
-    document.getElementById("modalTitle").textContent = `${b.name} — le deal parfait`;
+    const pf = b.perfect, pa = AGENCIES[pf.agency];
+    const pp = priceDeal(b, { agency: pf.agency, formule: pf.formule, options: [pf.inq, pf.besoin], remise: 0 });
+    const fRows = Object.entries(b.formules)
+      .map(([k, f]) => { const [agId, fId] = k.split("."); const a = AGENCIES[agId]; const ag = b.agences[agId] || { pts: 0, lvl: "autre" };
+        return { tot: ag.pts + f.pts, html: `<tr class="border-b border-slate-100">
+        <td class="py-2 pr-2 font-bold">${a.emo} ${a.name}<div class="text-xs font-semibold text-slate-500">agence ${ag.lvl} (${ag.pts})</div></td>
+        <td class="py-2 pr-2">${a.formules[fId].name}<div class="text-xs font-semibold text-slate-500">${FORM_LABEL[f.pts]} (${f.pts})</div></td>
+        <td class="py-2 text-slate-600">${f.why}</td></tr>` }; })
+      .sort((x, y) => y.tot - x.tot).map(r => r.html).join("");
+    const oRows = Object.entries(b.options).sort((x, y) => y[1].pts - x[1].pts)
+      .map(([k, o]) => { const [agId, oId] = k.split("."); const a = AGENCIES[agId];
+        return `<tr class="border-b border-slate-100">
+        <td class="py-2 pr-2 font-bold">${a.emo} ${a.options[oId].name}</td>
+        <td class="py-2 pr-2 font-black ${o.pts > 0 ? "text-emerald-600" : "text-red-600"}">${o.pts > 0 ? "+" : ""}${o.pts}</td>
+        <td class="py-2 text-slate-600">${OPT_LABEL[o.pts]} · ${o.why}</td></tr>`; }).join("");
+    document.getElementById("modalTitle").textContent = `${b.name} — le corrigé`;
     document.getElementById("modalBody").innerHTML = `
-      <p class="mb-4 text-slate-700">Combinaison parfaite : <b>${pp ? euro(pp.final) : ""} HT</b> avant remise, pour un budget de <b>${euro(b.budget)}</b>.
-      Il fallait négocier une remise pour la rendre signable.</p>
-      <div class="overflow-x-auto"><table class="w-full text-sm text-left">
-        <thead><tr class="text-xs uppercase text-slate-500"><th class="pb-2">Agence</th><th class="pb-2">Formule (+20)</th><th class="pb-2">Inquiétude (+15)</th><th class="pb-2">Besoin (+10)</th></tr></thead>
-        <tbody>${rows}</tbody></table></div>
-      <p class="mt-4 text-sm text-slate-500">Toute autre option ajoutée au devis : −5 points.</p>`;
+      <p class="mb-2 text-slate-700"><b>Deal parfait :</b> ${pa.emo} ${pa.name}, ${pa.formules[pf.formule].name} + ${pa.options[pf.inq].name} + ${pa.options[pf.besoin].name},
+      soit <b>${euro(pp.final)} HT</b> avant remise pour un budget de <b>${euro(b.budget)}</b> : il fallait négocier une remise.</p>
+      <h4 class="font-black text-[#061A5C] mt-4 mb-1">Formules acceptées</h4>
+      <div class="overflow-x-auto"><table class="w-full text-sm text-left"><tbody>${fRows}</tbody></table></div>
+      <p class="text-xs text-slate-500 mt-1">Toute autre formule rate une condition de la fiche : −80. Budget dépassé : −80.</p>
+      <h4 class="font-black text-[#061A5C] mt-4 mb-1">Options qui comptent</h4>
+      <div class="overflow-x-auto"><table class="w-full text-sm text-left"><tbody>${oRows}</tbody></table></div>
+      <p class="text-xs text-slate-500 mt-1">Toute autre option : 0 point. Prix à 98 % du budget ou moins : +15, dans le budget : +5.</p>`;
     document.getElementById("modal").classList.add("show");
   };
   window.closeModal = () => document.getElementById("modal").classList.remove("show");
@@ -1734,7 +1654,7 @@ if (typeof document !== "undefined") {
   function renderResults() {
     const { buyers, agencies } = computeAll(entries);
     const bl = buyers.map(x => ({ emo: x.buyer.emo, name: x.buyer.name, score: x.res.buyerScore, value: `${x.res.buyerScore} pts`,
-      sub: x.res.signed && !x.res.nul ? AGENCIES[x.deal.agency].name : (x.res.nul ? "devis nul" : "aucun devis") }))
+      sub: x.res.signed ? AGENCIES[x.deal.agency].name + (x.res.fails ? " (condition ratée)" : "") : "aucun devis" }))
       .sort((a, b) => b.score - a.score);
     const al = agencies.map(a => ({ emo: a.ag.emo, name: a.ag.name, score: a.score, value: `${a.score} pts`,
       sub: `${Math.round(a.pct)} % de l'objectif${a.bonus ? ` + ${a.bonus} bonus` : ""}` }))
