@@ -1210,9 +1210,12 @@ function scoreDeal(buyer, deal) {
 
   // Sans une option qui répond à l'inquiétude ET une option qui répond au besoin : 90 au maximum
   const cap = hasInq && hasBesoin ? RULES.cap : RULES.capPartial;
-  if (score > cap && cap < RULES.cap) {
-    res.lines.push({ label: `Plafond à ${cap} : il manque ${!hasInq && !hasBesoin ? "l'inquiétude et le besoin" : !hasInq ? "la réponse à l'inquiétude" : "la réponse au besoin"}`, pts: cap - score, kind: "neg" });
+  if (score > cap) {
+    res.lines.push({ label: cap < RULES.cap
+      ? `Plafond à ${cap} : il manque ${!hasInq && !hasBesoin ? "l'inquiétude et le besoin" : !hasInq ? "la réponse à l'inquiétude" : "la réponse au besoin"}`
+      : `Plafond à ${cap} points (avant bonus)`, pts: cap - score, kind: "neg" });
   }
+  if (score < 0) res.lines.push({ label: "Score minimum : 0", pts: -score, kind: "pos" });
   score = Math.max(0, Math.min(cap, score));
   if (res.fails) res.reason = res.fails > 1 ? `${res.fails} conditions ratées` : "Une condition ratée";
 
